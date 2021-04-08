@@ -1,17 +1,11 @@
-import java.util.ArrayList;
-
-import javax.xml.transform.Source;
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
 import java.util.*;
 
 public class AdjacencyGraph {
     ArrayList<Vertex> vertices;
-
-
 
     public AdjacencyGraph() {
         vertices = new ArrayList<Vertex>();
@@ -24,11 +18,11 @@ public class AdjacencyGraph {
     // Function that will create a minimum spanning tree based on Prim's algorithm
     public void MSTPrims(){
         // ArrayList represting our minimum spanning tree
-        MSTNode[] mst = new MSTNode[vertices.size()];                 // O(1)
+        MSTNode[] mst = new MSTNode[vertices.size()];               
         // Using given MinHeap with pairs of vertices and their current distance
-        MinHeap<Pair>        minheap = new MinHeap<>();             // O(1)
+        MinHeap<Pair>        minheap = new MinHeap<>();            
         // A HashMap to keep Pairs from the minheap connected to their Vertex. Make loop-up quicker 
-        HashMap<Vertex,Pair> pairs   = new HashMap<>();             // O(1)
+        HashMap<Vertex,Pair> pairs   = new HashMap<>();             
         // Loops through all vertices and adds them and their attributes to different data structures
         for (int i = 0; i < vertices.size(); i++){                  // O(V log V)
             Vertex currentVertex = vertices.get(i);
@@ -39,27 +33,27 @@ public class AdjacencyGraph {
         }
         
         // Choosing a starting node as setting its distance to 0 and predecessor to itself
-        Pair startNode = minheap.getMinHeap().get(0);               // O(1)
-        startNode.setDistance(0);                                   // O(1)
-        startNode.vertex.setPred(startNode.vertex);                 // O(1)
-        int mst_pos = 0;                                            // O(1)
+        Pair startNode = minheap.getMinHeap().get(0);               
+        startNode.setDistance(0);                                   
+        startNode.vertex.setPred(startNode.vertex);                 
+        int mst_pos = 0;                                            
         // 
-        while(!minheap.isEmpty()){                                  // Total: O(V*(edge*log(V)) + V*log(V))
+        while(!minheap.isEmpty()){                                  // Total: O(E*log(V) + V*log(V)) = 
             // Extracting minimum vertex
             Pair    extractedNode = minheap.extractMin();           // O(log V)
-            Vertex  extractedVertex = extractedNode.vertex;         // O(1)
+            Vertex  extractedVertex = extractedNode.vertex;         
             // Add to MST
-            MSTNode mstNode = new MSTNode(extractedVertex, extractedVertex.pred, extractedNode.distance); // O(1)                                    
-            mst[mst_pos] = mstNode;                                 // O(1)
-            mst_pos++;                                              // O(1)
+            MSTNode mstNode = new MSTNode(extractedVertex, extractedVertex.pred, extractedNode.distance);                                    
+            mst[mst_pos] = mstNode;                                 
+            mst_pos++;                                              
             // Go through each edge connected to current extracted node to update current distance and predecessor dependent on whether current distance is shorter
-            for(Edge edge : extractedVertex.OutEdges){              // Total: O(edge*log(V))
+            for(Edge edge : extractedVertex.OutEdges){              // Total: O(E*log(V))
                 if (edge.weight < edge.to.dist){
-                    edge.to.setDist(edge.weight);                   // O(1)
-                    edge.to.setPred(edge.from);                     // O(1)
-                    Pair currentPair = pairs.get(edge.to);          // O(1)
-                    currentPair.setDistance(edge.to.dist);          // O(1)
-                    int pos = minheap.getPosition(currentPair);     // O(1)
+                    edge.to.setDist(edge.weight);                   
+                    edge.to.setPred(edge.from);                     
+                    Pair currentPair = pairs.get(edge.to);          
+                    currentPair.setDistance(edge.to.dist);          
+                    int pos = minheap.getPosition(currentPair);     
                     minheap.decreasekey(pos);                       // O(log(V)) since it's just a bubble sort?
                 }
             }
@@ -76,7 +70,7 @@ public class AdjacencyGraph {
         System.out.printf(Locale.US, "total price:    %,d kroner %n", 100000*total);
     }
 
-
+    // Given by lecturer
     public void addEdge(Vertex f, Vertex t, Integer w) {
         if (!(vertices.contains(f) && vertices.contains(t))) {
             System.out.println(" Vertex not in graph");
@@ -85,8 +79,8 @@ public class AdjacencyGraph {
         Edge e = new Edge(f, t, w);
     }
 
-
     // Function that takes a CSV file and adds the towns to a list of vertices as well as adding edges between them
+    // Made by us
     public void createFromFile(String file) {
         String line    = "";
         String splitBy = ",";
