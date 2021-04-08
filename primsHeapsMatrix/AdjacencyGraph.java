@@ -54,7 +54,7 @@ public class AdjacencyGraph {
                     Pair currentPair = pairs.get(edge.to);          
                     currentPair.setDistance(edge.to.dist);          
                     int pos = minheap.getPosition(currentPair);     
-                    minheap.decreasekey(pos);                       // O(log(V)) since it's just a bubble sort?
+                    minheap.decreasekey(pos);                       // O(log(V))
                 }
             }
         }
