@@ -37,10 +37,10 @@ public class AdjacencyGraph {
         startNode.setDistance(0);                                   
         startNode.vertex.setPred(startNode.vertex);                 
         int mst_pos = 0;                                            
-        // 
-        while(!minheap.isEmpty()){                                  // Total: O(E*log(V) + V*log(V)) = 
+        // Looping through all minheap nodes and extracting minimum each time to update distances
+        while(!minheap.isEmpty()){                                  // Total: O(E*log(V) + V*log(V)) = O(E*log(V))
             // Extracting minimum vertex
-            Pair    extractedNode = minheap.extractMin();           // O(log V)
+            Pair    extractedNode = minheap.extractMin();           
             Vertex  extractedVertex = extractedNode.vertex;         
             // Add to MST
             MSTNode mstNode = new MSTNode(extractedVertex, extractedVertex.pred, extractedNode.distance);                                    
@@ -54,14 +54,14 @@ public class AdjacencyGraph {
                     Pair currentPair = pairs.get(edge.to);          
                     currentPair.setDistance(edge.to.dist);          
                     int pos = minheap.getPosition(currentPair);     
-                    minheap.decreasekey(pos);                       // O(log(V))
+                    minheap.decreasekey(pos);                       
                 }
             }
         }
                
         // Adding together distances from the minimum spanning tree
         int total = 0;
-        for (MSTNode node : mst){      // O(V)
+        for (MSTNode node : mst){      
             System.out.println(node);
             total += node.distance;
         }
@@ -80,7 +80,6 @@ public class AdjacencyGraph {
     }
 
     // Function that takes a CSV file and adds the towns to a list of vertices as well as adding edges between them
-    // Made by us
     public void createFromFile(String file) {
         String line    = "";
         String splitBy = ",";
@@ -186,14 +185,7 @@ class Vertex implements Comparable<Vertex> {
     public void addOutEdge(Edge e) {
         OutEdges.add(e);
     }
-    /*
-    @Override
-    public boolean equals(Object vertex) {
-        if (this == vertex)
-            return true;
-        return false;
-    }
-    */
+  
 
     @Override
     public int compareTo(Vertex o) {
