@@ -1,0 +1,10 @@
+Design the database system for students course registration
+
+Create the database and insert the provided information
+
+Make a user interface in javaFX where a user can select a student and get print out courses taken and the grades 
+and the average grade for student and a course and get average grade on a selected course. 
+
+Connect from the java program to the database, retrieve the average grade of a student and average grade of a course 
+(The average must be calculated in the database). 
+
