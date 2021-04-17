@@ -9,7 +9,7 @@ public class Main {
     {
         for (int i = 0 ; i < times ; i++)
         {
-            System.out.println("\n");
+            System.out.println("");
         }
     }
 }
