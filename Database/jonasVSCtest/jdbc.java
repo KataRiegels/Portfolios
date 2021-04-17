@@ -46,6 +46,7 @@ public class jdbc
     }
   }
 
+  // Forcibly ends connection
   public void endConnection()
   {
     if (conn != null) {
@@ -57,6 +58,7 @@ public class jdbc
     }
   }
 
+  // Queries a database for data through sql
   public ArrayList query(String Query)
   {
     ArrayList result = null;
