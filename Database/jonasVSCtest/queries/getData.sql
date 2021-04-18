@@ -1,2 +1,2 @@
 -- SQLite
-SELECT studentName FROM Student
+SELECT * FROM Towns
