@@ -58,28 +58,20 @@ public class jdbc
   }
 
   // Queries a database for data through sql
-  private ResultSet query(String Query)
+  private ResultSet query(String Query) throws SQLException
   {
-    ResultSet result = null;
-    try {
-      connect();
-      Statement stmt = conn.createStatement();
-
-      result = stmt.executeQuery(Query);
-    } catch (SQLException e) {
-      System.err.println("Error: query refused connect");
-      e.printStackTrace();
-    }
-    return result;
+    connect();
+    Statement stmt = conn.createStatement();
+    return stmt.executeQuery(Query);
   }
 
   // 
-  public void getStudent(String student)
+  public String[] getStudent(String student)
   {
-    //String[] result = null;
-    ResultSet rs = query("SELECT studentName,grade,Grades.courseID,courseName,courseYear,fallSemester,teacherName FROM Grades INNER JOIN Courses ON Grades.courseID=Courses.courseID WHERE studentName='" + student + "';");
+    String[] result = null;
     try
     {
+      ResultSet rs = query("SELECT studentName,grade,Grades.courseID,courseName,courseYear,fallSemester,teacherName FROM Grades INNER JOIN Courses ON Grades.courseID=Courses.courseID WHERE studentName='" + student + "';");
       while(rs.next())
       {
         String studentName = rs.getString("studentName");
@@ -93,5 +85,6 @@ public class jdbc
     {
       endConnection();
     }
+    return result;
   }
 }
