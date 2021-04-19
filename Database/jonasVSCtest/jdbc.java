@@ -1,7 +1,4 @@
 import java.sql.*;
-import java.util.ArrayList;
-
-import javax.management.Query;
 
 public class jdbc 
 {
@@ -61,7 +58,7 @@ public class jdbc
   }
 
   // Queries a database for data through sql
-  public ResultSet query(String Query)
+  private ResultSet query(String Query)
   {
     ResultSet result = null;
     try {
@@ -72,16 +69,14 @@ public class jdbc
     } catch (SQLException e) {
       System.err.println("Error: query refused connect");
       e.printStackTrace();
-    } finally
-    {
-      endConnection();
     }
     return result;
   }
 
-  public String[] getStudent(String student)
+  // 
+  public void getStudent(String student)
   {
-    String[] result = null;
+    //String[] result = null;
     ResultSet rs = query("SELECT studentName,grade,Grades.courseID,courseName,courseYear,fallSemester,teacherName FROM Grades INNER JOIN Courses ON Grades.courseID=Courses.courseID WHERE studentName='" + student + "';");
     try
     {
@@ -94,7 +89,9 @@ public class jdbc
     catch (SQLException e)
     {
       e.printStackTrace();
+    } finally
+    {
+      endConnection();
     }
-    return result;
   }
 }
