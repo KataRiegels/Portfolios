@@ -4,7 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,18 +30,48 @@ public class StudentsController {
         }
     }
 
+    public void clear(Node[] screenArray){
+        for(Node node : screenArray ){
+            node.setVisible(false);
+        }
+    }
+
+    public void show(Node[] screenArray){
+        for(Node node : screenArray ){
+            node.setVisible(true);
+        }
+    }
+
     public void setView(StudentsView view) {
         this.view = view;
         view.exitBtn.setOnAction(e-> Platform.exit());
         EventHandler<ActionEvent> PrintTrainTrips = e->HandlerPrintTrainRoutes("SDF19", view.TrainText);
         view.FindTrainsBtn.setOnAction(PrintTrainTrips);
     }
-    public void HandlerPrintTrainRoutes(String ID, TextArea txtArea){
+    public void handlerTest(String ID, TextArea test) {
+        String avgGrade = model.getCourseAverage(ID);
+        //view.test2.setVisible(true);
+        test.clear();
+        //btn.setVisible(true);
+        test.appendText("Average course grade " + avgGrade);
+    }
+    public void HandlerPrintTrainRoutes(String ID, TextArea test, ComboBox<String> comb){
+        //String avgGrade= model.getCourseAverage(ID);
+        //view.test2.setVisible(true);
+        test.clear();
+        comb.setVisible(true);
+        //test.appendText("Average course grade " + avgGrade);
+
+
+        /*
+
+
         txtArea.clear();
         txtArea.appendText("Course average for " + ID + " \n");
         //double time=(double) Hour +((double) Minutes/100);
         String trips= model.getCourseAverage(ID);
         txtArea.appendText(trips);
+        */
                 /*
         for (int i=0;i<trips.size();i++){
             String deptime= String.format("%.2f", trips.get(i).departureTime);
@@ -46,13 +81,19 @@ public class StudentsController {
 
                  */
     }
+    public ObservableList<String> studVScourse(){
+        ArrayList<String> names= new ArrayList<>();
+        names.add("Students");
+        names.add("Course");
+        ObservableList<String> studentNames= FXCollections.observableArrayList(names);
+        return  studentNames;
+    }
 
 
-
-    public ObservableList<String> getStations(){
+    public ObservableList<String> getStudentNames(){
         ArrayList<String> names= model.SQLQueryStudentNames();
-        ObservableList<String> stationNames= FXCollections.observableArrayList(names);
-        return  stationNames;
+        ObservableList<String> studentNames= FXCollections.observableArrayList(names);
+        return  studentNames;
     }
 
 
