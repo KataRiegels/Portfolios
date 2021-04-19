@@ -1,11 +1,13 @@
 import java.sql.*;
+import java.util.*;
 
 import static java.sql.DriverManager.getConnection;
 
 public class App {
     public static void main(String[] args) throws Exception {
         //String query = "select studentName,grade from CourseGrade ";
-        String url = "jdbc:sqlite:C:\\Users\\Mitzie\\Documents\\4th_sem\\Software development\\Portfolios\\Database\\Main\\StudentsDB.db";
+        //String url = "jdbc:sqlite:C:\\Users\\Mitzie\\Documents\\4th_sem\\Software development\\Portfolios\\Database\\Main\\StudentsDB.db";
+        String url = "jdbc:sqlite:StudentsDB.db";
         StudentModel SDB = new StudentModel(url);
 
         try{
