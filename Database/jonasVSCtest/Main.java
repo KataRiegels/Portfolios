@@ -4,6 +4,7 @@ public class Main {
         conclear(10); //Temporary command to add space in console
         String db = "jdbc:sqlite:/home/xilas/Desktop/gits/Portfolios/Database/Main/StudentsDB.db";
         jdbc con = new jdbc(db);
+        con.getStudent("Aisha Lincoln");
     }
     public static void conclear(int times)
     {

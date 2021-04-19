@@ -1,6 +1,8 @@
 import java.sql.*;
 import java.util.ArrayList;
 
+import javax.management.Query;
+
 public class jdbc 
 {
   // Private variables for connector and database
@@ -14,7 +16,6 @@ public class jdbc
     try
     {
       connect(database);
-      db = database;
     }
     catch (SQLException e)
     {
@@ -30,6 +31,7 @@ public class jdbc
   private void connect(String database) throws SQLException
   {
     conn = DriverManager.getConnection(database);
+    db = database;
     System.out.println("Database Connected Successfully!");
   }
 
@@ -59,17 +61,39 @@ public class jdbc
   }
 
   // Queries a database for data through sql
-  public ArrayList query(String Query)
+  public ResultSet query(String Query)
   {
-    ArrayList result = null;
+    ResultSet result = null;
     try {
       connect();
+      Statement stmt = conn.createStatement();
+
+      result = stmt.executeQuery(Query);
     } catch (SQLException e) {
       System.err.println("Error: query refused connect");
       e.printStackTrace();
     } finally
     {
       endConnection();
+    }
+    return result;
+  }
+
+  public String[] getStudent(String student)
+  {
+    String[] result = null;
+    ResultSet rs = query("SELECT studentName,grade,Grades.courseID,courseName,courseYear,fallSemester,teacherName FROM Grades INNER JOIN Courses ON Grades.courseID=Courses.courseID WHERE studentName='" + student + "';");
+    try
+    {
+      while(rs.next())
+      {
+        String studentName = rs.getString("studentName");
+        System.out.println(studentName);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
     }
     return result;
   }
