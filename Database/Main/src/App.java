@@ -36,7 +36,7 @@ public class App extends Application{
             SDB.createStatement();
             ArrayList<String> names = SDB.SQLQueryStudentNames();
             double ag = SDB.getStudentAverage("Anya Nielsen");
-            String agC = SDB.getCourseAverage("SD", 2020, "spring");
+            String agC = SDB.getCourseAverage("SDF19");
             System.out.println("Course avg: " + agC);
             System.out.println(ag);
             System.out.println(names.toString());

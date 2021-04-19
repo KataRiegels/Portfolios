@@ -1,0 +1,53 @@
+
+
+- make array with Nodes for every screen
+- SCREEN METHOD: make methods for every screen
+    - clear(array)
+    - show(array)
+
+
+
+!event handlers!
+
+- return -> prev SCREEN METHOD
+
+screen 1:
+- continue
+    -> takes studentVScourse input
+    -> take screen two or 3
+
+
+
+screen 2:
+- select student
+    -> studentCOMB input
+    -> display information based on that
+        - avg grade
+        - courses taken
+        - grade for each course
+        - (town)
+- add grade
+    -> studentCOMB input
+    -> call screen 4 method
+- return -> prev SCREEN METHOD
+
+screen 3:
+- select course
+    -> reads coursesCOMB
+    -> display course info:
+        - avg grade
+        - full course name
+        - semester/year
+        - teacher
+- return -> prev SCREEN METHOD
+
+screen 4:
+- set grade
+    -> read nullCourseCOMB and possibleGrades
+    -> send SQL query to database to update grade
+- return -> prev SCREEN METHOD
+
+
+
+
+

@@ -45,8 +45,16 @@ public class StudentsController {
     public void setView(StudentsView view) {
         this.view = view;
         view.exitBtn.setOnAction(e-> Platform.exit());
-        EventHandler<ActionEvent> PrintTrainTrips = e->HandlerPrintTrainRoutes("SDF19", view.TrainText);
-        view.FindTrainsBtn.setOnAction(PrintTrainTrips);
+
+
+        // event handlers:
+
+        EventHandler<ActionEvent> studentOrCourse = e->HandlerPrintTrainRoutes(view.selStudentOrCourse.getValue(), view.test, view.selectCourseCOMB);
+        EventHandler<ActionEvent> PrintTrainTrips = e->handlerTest(view.selectCourseCOMB.getValue(), view.test);
+
+        view.getCourseAverageBTN.setOnAction(studentOrCourse);
+        view.continueBTN.setOnAction(PrintTrainTrips);
+
     }
     public void handlerTest(String ID, TextArea test) {
         String avgGrade = model.getCourseAverage(ID);
