@@ -4,12 +4,18 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application
 {
-    Button button;
+    // JavaFX window elements
+    Button button1,button2;
+    Stage window;
+    Scene scene1,scene2;
+
     public static void main(String[] args) 
     {
         conclear(10); //Temporary command to add space in console
@@ -30,19 +36,31 @@ public class Main extends Application
     @Override
     public void start(Stage primaryStage) throws Exception 
     {
-        Stage window = primaryStage;
+        window = primaryStage;
         window.setTitle("Course Database");
 
-        button = new Button();
-        button.setText("Hello There");
+        Label label1 = new Label("Welcome to the first scene");
 
-        button.setOnAction(
+        button1 = new Button();
+        button1.setText("Hello There");
+
+        button2 = new Button();
+        button2.setText("Kenobi!");
+
+        button1.setOnAction(
         e -> 
         {
-            System.out.println("Kenobi!");
-            System.out.println("You've come at last");
+            window.setScene(scene2);
         });
-        /*button.setOnAction(new EventHandler<ActionEvent>()
+        button2.setOnAction(
+        e -> 
+        {
+            window.setScene(scene1);
+        });
+
+        /*
+        // Example of event handler that uses class, 'this' in this case
+        button.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
             public void handle(ActionEvent event) 
@@ -52,13 +70,20 @@ public class Main extends Application
                     System.out.println("Kenobi!");
                 }
             }
-        });*/
+        });
+        */
 
-        StackPane layout = new StackPane();
-        layout.getChildren().add(button);
+        // Layout 1
+        VBox layout1 = new VBox(20);
+        layout1.getChildren().addAll(label1,button1);
+        scene1 = new Scene(layout1, 800, 450);
 
-        Scene scene = new Scene(layout, 800, 450);
-        window.setScene(scene);
+        // Layout 2
+        StackPane layout2 = new StackPane();
+        layout2.getChildren().add(button2);
+        scene2 = new Scene(layout2, 800, 450);
+
+        window.setScene(scene1);
 
         window.show();
     }
