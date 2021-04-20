@@ -39,6 +39,13 @@ public class Main extends Application
         window = primaryStage;
         window.setTitle("Course Database");
 
+        window.setOnCloseRequest(
+        e ->
+        {
+            e.consume();
+            closeProgram();
+        });
+
         Label label1 = new Label("Welcome to the first scene");
 
         button1 = new Button();
@@ -56,6 +63,12 @@ public class Main extends Application
         e -> 
         {
             window.setScene(scene1);
+            boolean result = ConfirmBox.display("Confirm your answer!","Are you a jedi?");
+            System.out.println(result);
+            if (!result)
+            {
+                closeProgram();
+            }
         });
 
         /*
@@ -88,13 +101,13 @@ public class Main extends Application
         window.show();
     }
     
-    /*@Override
-    public void handle(ActionEvent event) 
+    private void closeProgram()
     {
-        if (event.getSource() == button)
+        Boolean answer = ConfirmBox.display("Before you go!","Are you sure you want to exit!?");
+        if (answer)
         {
-            System.out.println("Kenobi!");
+            window.close();
         }
-    }*/
+    }
 }
 
