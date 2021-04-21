@@ -28,7 +28,7 @@ public class StudentModel {
 
     public ArrayList<String> SQLQueryStudentNames(){
         ArrayList<String> Names = new ArrayList<>();
-        String sql="Select studentName From Student;";
+        String sql="Select courseID From Courses;";
         try {
             rs = stmt.executeQuery(sql);
             while (rs != null && rs.next()){
@@ -43,7 +43,7 @@ public class StudentModel {
         return Names;
     }
     public double getStudentAverage(String ID){
-        String sql="Select AVG(grade) From CourseGrade Where studentName ='" + ID + "' and grade is not null;";
+        String sql="Select AVG(grade) From Grades Where studentName ='" + ID + "' and grade is not null;";
         double avgGrade = 0.0;
         try{
             rs = stmt.executeQuery(sql);
@@ -54,8 +54,10 @@ public class StudentModel {
         return avgGrade;
     }
 
-    public String getCourseAverage(String name, int year, String semester){
-        String sql = "select avg(grade) where courseName = '" + name + "' and year = '" + year + "' and semester = '"+ semester + "' case when null then null else avg(grade) end from courseGrade ;";
+
+
+    public String getCourseAverage(String courseID){
+        String sql = "select avg(grade) as CourseAverage From Grades INNER JOIN Courses ON Grades.courseID=Courses.courseID WHERE Grades.courseID='"+ courseID +"' ;";
         String avgGrade = "None";
 
         try{
@@ -73,4 +75,6 @@ public class StudentModel {
         return avgGrade;
 
     }
+
+
 }
