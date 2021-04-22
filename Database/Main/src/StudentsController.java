@@ -49,11 +49,11 @@ public class StudentsController {
 
         // event handlers:
 
-        EventHandler<ActionEvent> studentOrCourse = e->HandlerPrintTrainRoutes(view.selStudentOrCourse.getValue(), view.test, view.selectCourseCOMB);
-        EventHandler<ActionEvent> PrintTrainTrips = e->handlerTest(view.selectCourseCOMB.getValue(), view.test);
+        //EventHandler<ActionEvent> studentOrCourse = e->HandlerPrintTrainRoutes(view.selStudentOrCourse.getValue(), view.test, view.selectCourseCOMB);
+        //EventHandler<ActionEvent> PrintTrainTrips = e->handlerTest(view.selectCourseCOMB.getValue(), view.test);
 
-        view.getCourseAverageBTN.setOnAction(studentOrCourse);
-        view.continueBTN.setOnAction(PrintTrainTrips);
+        //view.getCourseAverageBTN.setOnAction(studentOrCourse);
+        //view.continueBTN.setOnAction(PrintTrainTrips);
 
     }
     public void handlerTest(String ID, TextArea test) {

@@ -17,24 +17,37 @@ import java.util.ArrayList;
 public class StudentsView {
     private StudentsController control;
     private GridPane Startview;
-    Button exitBtn=new Button("Exit");
-    Button getCourseAverageBTN=new Button("Get course average");
-    Button continueBTN=new Button("Continue");
+    Button exitBtn   = new Button("Exit");
+    Button returnBTN = new Button("Return");
 
-    Label courseSelectionLBL =new Label("Select course:");
-    Label test2 =new Label("Select student:");
+    // Screen 1
+    Button continueBTN       = new Button("Continue");
+    Label studentOrCourseLBL = new Label("Select course or student:");
+    ComboBox<String> selStudentOrCourseCOMB =new ComboBox<>();
 
-    //Label TimeLbl = new Label("Select earliest time:");
-    Text TrainText = new Text();
-    TextArea test = new TextArea();
+    // Screen 2
+    Label selectCourseLBL             = new Label("Select course");
+    ComboBox<String> selectCourseCOMB = new ComboBox<>();
+    TextArea displayCourseInfoTXT     = new TextArea();
+    Button confirmCourseBTN           = new Button("Confirm");
+    //return btn
 
-    ComboBox<String> selectCourseCOMB =new ComboBox<>();
-    //ComboBox<String> EndStationComB=new ComboBox<>();
-    ComboBox<String> selStudentOrCourse =new ComboBox<>();
+    // screen 3
+    Label selectStudentLBL             = new Label("Select student");
+    ComboBox<String> selectStudentCOMB = new ComboBox<>();
+    TextArea displayStudentInfoTXT     = new TextArea();
+    Button addGradeBTN                 = new Button("Add grade for student");
+    Button confirmStudentBTN           = new Button("Confirm");
 
 
-    //ComboBox<Integer> HourComB =new ComboBox<>();
-    //ComboBox<Integer> MinuteComB =new ComboBox<>();
+    // screen 4
+    Label selectedStudentLBL              = new Label("");
+    Label selectNullCourseLBL             = new Label("Select course");
+    ComboBox<String> selectNullCourseCOMB = new ComboBox<>();
+    Label selectGradeLBL                  = new Label("Select a grade");
+    ComboBox<String> selectGradeCOMB      = new ComboBox<>();
+    Button setGradeBTN                    = new Button("Set grade for student");
+
 
     public StudentsView(StudentsController control){
         this.control=control;
@@ -42,12 +55,15 @@ public class StudentsView {
     }
 
     private void createAndConfigure(){
-        Startview=new GridPane();
+        Startview = new GridPane();
         Startview.setMinSize(300,200);
         Startview.setPadding(new Insets(10,10,10,10));
         Startview.setVgap(5);
         Startview.setHgap(1);
+
+
         Startview.add(exitBtn, 20,40);
+        /*
         Startview.add(getCourseAverageBTN,15,6);
         Startview.add(continueBTN,20,6);
 
@@ -74,6 +90,8 @@ public class StudentsView {
         selStudentOrCourse.getSelectionModel().selectFirst();
 
         //EndStationComB.getSelectionModel().selectFirst();
+
+         */
 
 
 
