@@ -87,23 +87,28 @@ public class StudentModel {
         return fullname;
     }
 
-    public String getAllUngradedCourses() {
+    public ArrayList<String> getAllUngradedCourses() {
+        ArrayList<String> courses = new ArrayList<>();
         //String primary = "select IFNULL(avg(grade),'null') From Grades WHERE Grades.courseID='" + courseID + "' AND Grades.grade is";
         String sql = "select courseID from Grades where grade is null;";
-
+        String name = null;
         //String primary = "select grade From Grades INNER JOIN Courses ON Grades.courseID=Courses.courseID WHERE Grades.courseID='" + courseID + "' AND Grades.grade is";
         String avgGrade = "None";
         //String sql = "select avg(grade) as CourseAverage From Grades INNER JOIN Courses ON Grades.courseID=Courses.courseID WHERE Grades.courseID='" + courseID + "' AND Grades.grade is not null ;";
         try {
 
             rs = stmt.executeQuery(sql);
-            if (rs.getString(1).equals("none")) {
-                avgGrade = "Course has not been graded";
-            } else avgGrade = Double.toString(rs.getDouble(1));
+            while (rs != null && rs.next() ) {
+                    name = rs.getString(1);
+                if (!courses.contains(name)) {
+                    courses.add(name);
+                }
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return avgGrade;
+        System.out.println(courses);
+        return courses;
 
 
     }
@@ -133,12 +138,14 @@ public class StudentModel {
     }
 
 
-    public double getStudentAverage(String ID) {
-        String sql = "Select AVG(grade) From Grades Where studentName ='" + ID + "' and grade is not null;";
-        double avgGrade = 0.0;
+    public String getStudentAverage(String ID) {
+        String sql = "Select IFNULL(AVG(grade),'none') From Grades Where studentName ='" + ID + "' and grade is not null;";
+        String avgGrade = "none";
         try {
             rs = stmt.executeQuery(sql);
-            avgGrade = rs.getDouble(1);
+            if (rs.getString(1).equals("none")) {
+                avgGrade = "Course has not been graded";
+            } else avgGrade = Double.toString(rs.getDouble(1));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -148,15 +155,16 @@ public class StudentModel {
 
     public ArrayList<String[]> getCourseAndGrade(String studentName) {
         ArrayList<String[]> courseAndGrade = new ArrayList<>();
-        String sql = "Select courseID,Grade  From Grades where studentName ='" + studentName + "';";
+        String sql = "Select courseID,IFNULL(Grade, 'Not graded')  From Grades where studentName ='" + studentName + "';";
         String fullname = "";
-        Integer grade = 0;
+        String grade = "0";
         try {
             rs = stmt.executeQuery(sql);
             while (rs != null && rs.next()) {
                 fullname = rs.getString(1);
-                grade = rs.getInt(2);
-                courseAndGrade.add(new String[]{fullname, Integer.toString(grade)});
+
+                grade = rs.getString(2);
+                courseAndGrade.add(new String[]{fullname, grade});
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

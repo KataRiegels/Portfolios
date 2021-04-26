@@ -86,19 +86,20 @@ public class StudentsController {
         view.displayCourseInfoTXT.appendText("Selected course: " + courseName.get(0) + " - "  + courseName.get(1) + " - " + courseName.get(2) + " - " + "\n");
         view.displayCourseInfoTXT.appendText("Course teacher: " + teacherName + "\n");
         view.displayCourseInfoTXT.appendText("Course average: " + courseAvg);
+        model.getAllUngradedCourses();
     }
 
     public void studentInfoBox(String studentName) {
         ArrayList<String[]> courseGrade = model.getCourseAndGrade(studentName);
         ArrayList<String> courseName;
-        double studentAvg = model.getStudentAverage(studentName);
+        String studentAvg = model.getStudentAverage(studentName);
 
         view.displayStudentInfoTXT.clear();
         view.displayStudentInfoTXT.appendText("Selected student: " + studentName + "\n");
         for(String[] course : courseGrade){
              courseName = model.getCourseName(course[0]);
              String course_ = "Course: " + courseName.get(0) + " - "  + courseName.get(1) + " - " + courseName.get(2);
-            view.displayStudentInfoTXT.appendText(course_ + ", grade: " + course[1] +  "\n");
+            view.displayStudentInfoTXT.appendText(course_ + " - Got grade: " + course[1] +  "\n");
         }
 
         view.displayStudentInfoTXT.appendText("Average grade: " + studentAvg);
