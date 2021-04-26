@@ -5,11 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -49,19 +44,69 @@ public class StudentsController {
         view.exitBtn.setOnAction(e-> Platform.exit());
 
         view.screen2.hide();
+        view.screen3.hide();
+        view.screen4.hide();
 
         // event handlers:
+        EventHandler<ActionEvent> returnEvent     = e->goTo(currentScreen, currentScreen.getPrev());
         EventHandler<ActionEvent> studentOrCourse = e->goTo(view.screen1, view.screens.get(view.selStudentOrCourseCOMB.getValue()));
-        EventHandler<ActionEvent> returnEvent     = e-> goTo(currentScreen, currentScreen.getPrev());
+        EventHandler<ActionEvent> addingGrades    = e->goToStudentGrade(currentScreen, view.screen4, view.selectStudentCOMB.getValue());
+        EventHandler<ActionEvent> courseConfirm   = e->courseInfoBox(view.selectCourseCOMB.getValue());
+        EventHandler<ActionEvent> studentConfirm  = e->studentInfoBox(view.selectStudentCOMB.getValue());
+        //EventHandler<ActionEvent> updateGrade     = e->setNewGrade(view.selectNullCourseCOMB.getValue(), view.selectGradeCOMB.getValue());
 
-        //EventHandler<ActionEvent> studentOrCourse = e->HandlerPrintTrainRoutes(view.selStudentOrCourse.getValue(), view.test, view.selectCourseCOMB);
-        //EventHandler<ActionEvent> PrintTrainTrips = e->handlerTest(view.selectCourseCOMB.getValue(), view.test);
+
 
         view.continueBTN.setOnAction(studentOrCourse);
         view.returnBTN.setOnAction(returnEvent);
+        view.addGradeBTN.setOnAction(addingGrades);
+        view.confirmCourseBTN.setOnAction(courseConfirm);
+        view.confirmStudentBTN.setOnAction(studentConfirm);
+        //view.setGradeBTN.setOnAction(updateGrade);
+
         //view.continueBTN.setOnAction(PrintTrainTrips);
 
     }
+
+
+
+
+
+    public void courseInfoBox(String courseID){
+        ArrayList<String> courseName = model.getCourseName(courseID);
+        String teacherName = model.getTeacherName(courseID);
+        String courseAvg = model.getCourseAverage(courseID);
+
+        view.displayCourseInfoTXT.clear();
+        view.displayCourseInfoTXT.appendText("Selected course: " + courseName.get(0) + " - "  + courseName.get(1) + " - " + courseName.get(2) + " - " + "\n");
+        view.displayCourseInfoTXT.appendText("Course teacher: " + teacherName + "\n");
+        view.displayCourseInfoTXT.appendText("Course average: " + courseAvg);
+    }
+
+    public void studentInfoBox(String studentName) {
+        ArrayList<String[]> courseGrade = model.getCourseAndGrade(studentName);
+        ArrayList<String> courseName;
+        double studentAvg = model.getStudentAverage(studentName);
+
+        view.displayStudentInfoTXT.clear();
+        view.displayStudentInfoTXT.appendText("Selected student: " + studentName + "\n");
+        for(String[] course : courseGrade){
+             courseName = model.getCourseName(course[0]);
+             String course_ = "Course: " + courseName.get(0) + " - "  + courseName.get(1) + " - " + courseName.get(2);
+            view.displayStudentInfoTXT.appendText(course_ + ", grade: " + course[1] +  "\n");
+        }
+
+        view.displayStudentInfoTXT.appendText("Average grade: " + studentAvg);
+    }
+
+
+    public void goToStudentGrade(Screen oldscreen, Screen newscreen, String name){
+
+        view.selectNullCourseCOMB.setItems(getUngradedCourseIDs(name));
+        view.selectedStudentLBL.setText(name);
+        goTo(oldscreen,newscreen);
+    }
+
 
 
 
@@ -73,63 +118,23 @@ public class StudentsController {
     }
 
 
-    public void handlerTest(String ID, TextArea test) {
-        String avgGrade = model.getCourseAverage(ID);
-        //view.test2.setVisible(true);
-        test.clear();
-        //btn.setVisible(true);
-        test.appendText("Average course grade " + avgGrade);
-    }
-    public void HandlerPrintTrainRoutes(String ID, TextArea test, ComboBox<String> comb){
-        //String avgGrade= model.getCourseAverage(ID);
-        //view.test2.setVisible(true);
-        test.clear();
-        comb.setVisible(true);
-        //test.appendText("Average course grade " + avgGrade);
-
-
-        /*
-
-
-        txtArea.clear();
-        txtArea.appendText("Course average for " + ID + " \n");
-        //double time=(double) Hour +((double) Minutes/100);
-        String trips= model.getCourseAverage(ID);
-        txtArea.appendText(trips);
-        */
-                /*
-        for (int i=0;i<trips.size();i++){
-            String deptime= String.format("%.2f", trips.get(i).departureTime);
-            String arrtime=String.format("%.2f", trips.get(i).arrivalTime);
-            txtArea.appendText(i+";"+ trips.get(i).FromSt + ": "+ deptime + " -> "+ trips.get(i).ToSt +": "+ arrtime + "\n");
-        }
-
-                 */
-    }
-
-
-
     public ObservableList<String> getStudentNames(){
         ArrayList<String> names= model.SQLQueryStudentNames();
         ObservableList<String> studentNames= FXCollections.observableArrayList(names);
         return  studentNames;
     }
 
-
-/*
-    public void HandlerPrintTrainRoutes(String From, String To, Integer Hour, Integer Minutes, TextArea txtArea){
-        txtArea.clear();
-        txtArea.appendText(" Train, From Station: Departure -> To station: arrival \n");
-        double time=(double) Hour +((double) Minutes/100);
-        ArrayList<Traintrip> trips= model.FindTrainTrips2(From,To,time);
-        for (int i=0;i<trips.size();i++){
-            String deptime= String.format("%.2f", trips.get(i).departureTime);
-            String arrtime=String.format("%.2f", trips.get(i).arrivalTime);
-            txtArea.appendText(i+";"+ trips.get(i).FromSt + ": "+ deptime + " -> "+ trips.get(i).ToSt +": "+ arrtime + "\n");
-        }
+    public ObservableList<String> getCourseIDs(){
+        ArrayList<String> names= model.SQLQueryCourseIDs();
+        ObservableList<String> courseNames= FXCollections.observableArrayList(names);
+        return  courseNames;
     }
 
- */
+    public ObservableList<String> getUngradedCourseIDs(String studentName){
+        ArrayList<String> names= model.getUngradedCourses(studentName);
+        ObservableList<String> courseNames= FXCollections.observableArrayList(names);
+        return  courseNames;
+    }
 
 
 
