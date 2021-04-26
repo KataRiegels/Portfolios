@@ -129,10 +129,7 @@ public class StudentsView {
         ObservableList<String> possibleGrades = makeObsList("-3", "00", "02", "4", "7", "10", "12");
         selectGradeCOMB.setItems(possibleGrades);
         setGradeBTN.relocate(100,300);
-
-
-
-
+        confirmGradeUpdate.relocate(250,350);
     }
 
     public ObservableList<String> makeObsList(String... strings){

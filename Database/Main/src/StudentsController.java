@@ -53,7 +53,7 @@ public class StudentsController {
         EventHandler<ActionEvent> addingGrades    = e->goToStudentGrade(currentScreen, view.screen4, view.selectStudentCOMB.getValue());
         EventHandler<ActionEvent> courseConfirm   = e->courseInfoBox(view.selectCourseCOMB.getValue());
         EventHandler<ActionEvent> studentConfirm  = e->studentInfoBox(view.selectStudentCOMB.getValue());
-        //EventHandler<ActionEvent> updateGrade     = e->setNewGrade(view.selectNullCourseCOMB.getValue(), view.selectGradeCOMB.getValue());
+        EventHandler<ActionEvent> updateGrade     = e->setNewGrade(view.selectNullCourseCOMB.getValue(), view.selectGradeCOMB.getValue());
 
 
 
@@ -62,13 +62,18 @@ public class StudentsController {
         view.addGradeBTN.setOnAction(addingGrades);
         view.confirmCourseBTN.setOnAction(courseConfirm);
         view.confirmStudentBTN.setOnAction(studentConfirm);
-        //view.setGradeBTN.setOnAction(updateGrade);
+        view.setGradeBTN.setOnAction(updateGrade);
 
         //view.continueBTN.setOnAction(PrintTrainTrips);
 
     }
 
 
+    public void setNewGrade(String courseID, String grade){
+        String student = view.selectedStudentLBL.getText();
+        model.updateGrade(student, courseID, Integer.parseInt(grade));
+        view.confirmGradeUpdate.setText("Grade has been updated");
+    }
 
 
 

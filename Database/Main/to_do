@@ -1,4 +1,19 @@
 
+
+- null graded courses should say "ungraded"
+- make sure buttons don't fuck things up ïf nothing is chosen
+- ("set grades" for courses)
+
+
+
+
+
+
+
+
+
+
+
 Course text box:
 
 - Course:  *name, semester, year*
