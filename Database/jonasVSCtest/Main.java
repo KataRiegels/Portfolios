@@ -44,6 +44,7 @@ public class Main extends Application
         window.setTitle("Course Database");
 
         // Window Sizes
+
         window.setMinWidth(650);
         window.setMinHeight(400);
 
@@ -53,6 +54,7 @@ public class Main extends Application
         int[] startSize = {800,450};
 
         // Window Events
+
         window.setOnCloseRequest(
         e ->
         {
@@ -74,12 +76,6 @@ public class Main extends Application
         ListView<String> showlist = new ListView<>();
         showlist.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        // Text Fields
-
-        TextField nameInput = new TextField("e.g. Joshua");
-        TextField passInput = new TextField();
-        passInput.setPromptText("8 characters or more");
-
         // Buttons
 
         Button viewButton = new Button("Courses");
@@ -87,6 +83,7 @@ public class Main extends Application
         Button refresh = new Button("Refresh");
 
         // Button Events
+
         refresh.setOnAction(e -> 
         {
             if (showStudents)
@@ -142,6 +139,7 @@ public class Main extends Application
         
 
         // Scenes
+
         Scene scene1 = new Scene(borderPane, startSize[0],startSize[1]);
         window.setScene(scene1);
         window.show();
