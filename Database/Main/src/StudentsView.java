@@ -10,6 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -81,6 +82,7 @@ public class StudentsView {
 
         startview.getChildren().addAll(screen3.getNodes());
         startview.getChildren().addAll(screen4.getNodes());
+        screen2.addNode(addGradeBTN);
 
 
         startview.getChildren().add(exitBtn);
@@ -220,6 +222,10 @@ class Screen{
         }
     }
 
+    public void addNode(Node node){
+        nodes = Arrays.copyOf(nodes, nodes.length+1);
+        nodes[nodes.length-1] = node;
 
+    }
 
 }
