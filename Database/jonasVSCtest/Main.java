@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -6,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,7 +19,7 @@ public class Main extends Application
     Boolean showStudents;
     String db = "jdbc:sqlite:/home/xilas/Desktop/gits/Portfolios/Database/Main/StudentsDB.db";
     jdbc con = new jdbc(db);
-    ListView<String> show;
+    ListView<String> showLeft,showRight;
 
     public static void main(String[] args) 
     {
@@ -69,9 +70,9 @@ public class Main extends Application
 
         // Lists
 
-        show = new ListView<String>();
-        show.getItems().addAll(con.getStudents());
-        show.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        showLeft= new ListView<String>();
+        showLeft.getItems().addAll(con.getStudents());
+        showLeft.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         
         ListView<String> showlist = new ListView<>();
         showlist.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -79,7 +80,7 @@ public class Main extends Application
         // Buttons
 
         Button viewButton = new Button("Courses");
-        Button changeButton = new Button("Change Field");
+        Button detailsButton = new Button("Details");
         Button refresh = new Button("Refresh");
 
         // Button Events
@@ -88,45 +89,77 @@ public class Main extends Application
         {
             if (showStudents)
             {
-                show.getItems().clear();
-                show.getItems().addAll(con.getStudents());
+                showLeft.getItems().clear();
+                showLeft.getItems().addAll(con.getStudents());
             }
             else
             {
-                show.getItems().clear();
-                show.getItems().addAll(con.getCourses());
+                showLeft.getItems().clear();
+                showLeft.getItems().addAll(con.getCourses());
             }
         });
         viewButton.setOnAction(e -> 
         {
-            //show = con.getCourses();
             if (showStudents)
             {
                 viewButton.setText("Students");
                 label1.setText("Currently showing courses:");
-                show.getItems().clear();
-                show.getItems().addAll(con.getCourses());
+                showLeft.getItems().clear();
+                showLeft.getItems().addAll(con.getCourses());
                 showStudents = false;
             }
             else
             {
                 viewButton.setText("Courses");
                 label1.setText("Currently showing students:");
-                show.getItems().clear();
-                show.getItems().addAll(con.getStudents());
+                showLeft.getItems().clear();
+                showLeft.getItems().addAll(con.getStudents());
                 showStudents = true;
             }
         }); 
+
+        // ListView events
+
+        showLeft.setOnMouseClicked(e -> 
+        {
+            String current = showLeft.getSelectionModel().getSelectedItem();
+            if (showStudents)
+            {
+                showRight.getItems().clear();
+                showRight.getItems().addAll(con.getStudentInfo(current));
+            } 
+            else
+            {
+                showRight.getItems().clear();
+                showRight.getItems().addAll(con.getCourseInfo(current));
+            }
+        });
+        showRight.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+
+            @Override
+            public void handle(MouseEvent click) {
+                
+                if (click.getClickCount() == 2)
+                {
+                    
+                }
+                
+            }
+
+        });
 
         // Layouts
 
         VBox leftSide= new VBox(40);
         leftSide.setPadding(new Insets(10,10,10,10));
-        leftSide.getChildren().addAll(label1,show,viewButton);
+        leftSide.getChildren().addAll(label1,showLeft,viewButton);
+        leftSide.setAlignment(Pos.CENTER);
 
         VBox rightSide = new VBox(40);
         rightSide.setPadding(new Insets(10,10,10,10));
-        rightSide.getChildren().addAll(label2,showlist,changeButton);
+        rightSide.getChildren().addAll(label2,showlist,detailsButton);
+        rightSide.setAlignment(Pos.CENTER);
 
         VBox middle = new VBox(20);
         middle.getChildren().addAll(refresh);
