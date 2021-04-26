@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class jdbc 
 {
@@ -66,16 +67,16 @@ public class jdbc
   }
 
   // 
-  public String[] getStudent(String student)
+  public ArrayList<String> getStudents()
   {
-    String[] result = null;
+    ArrayList<String> result = new ArrayList<String>();
     try
     {
-      ResultSet rs = query("SELECT studentName,grade,Grades.courseID,courseName,courseYear,fallSemester,teacherName FROM Grades INNER JOIN Courses ON Grades.courseID=Courses.courseID WHERE studentName='" + student + "';");
+      ResultSet rs = query("SELECT studentName FROM Students");
       while(rs.next())
       {
         String studentName = rs.getString("studentName");
-        System.out.println(studentName);
+        result.add(studentName);
       }
     }
     catch (SQLException e)
@@ -87,4 +88,51 @@ public class jdbc
     }
     return result;
   }
+
+  public ArrayList<String> getStudent()
+  {
+    ArrayList<String> result = new ArrayList<String>();
+    try
+    {
+      ResultSet rs = query("SELECT studentName FROM Students");
+      while(rs.next())
+      {
+        String studentName = rs.getString("studentName");
+        result.add(studentName);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    } 
+    finally
+    {
+      endConnection();
+    }
+    return result;
+  }
+
+  public ArrayList<String> getCourses()
+  {
+    ArrayList<String> result = new ArrayList<String>();
+    try
+    {
+      ResultSet rs = query("SELECT courseID FROM Courses");
+      while(rs.next())
+      {
+        String studentName = rs.getString("courseID");
+        result.add(studentName);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    } 
+    finally
+    {
+      endConnection();
+    }
+    return result;
+  }
+
 }

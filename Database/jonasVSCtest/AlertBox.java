@@ -7,7 +7,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class AlertBox {
-    public static void display(String title, String message)
+    static boolean answer;
+
+    public static Boolean display(String title, String message)
     {
         Stage window = new Stage();
         
@@ -18,18 +20,34 @@ public class AlertBox {
         Label label = new Label();
         label.setText(message);
 
-        Button closeButton = new Button("Close the window you goon!");
-        closeButton.setOnAction(e ->
+        // Buttons
+        Button yesButton = new Button("Yes");
+        Button noButton = new Button("No");
+
+        // Button events
+        yesButton.setOnAction(e ->
         {
+            answer = true;
+            window.close();
+        });
+        noButton.setOnAction(e ->
+        {
+            answer = false;
             window.close();
         });
 
+        // Layouts
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label,closeButton);
+        layout.getChildren().addAll(label,yesButton,noButton);
         layout.setAlignment(Pos.CENTER);
 
+        // Scene
         Scene scene = new Scene(layout);
+
+        // Startup
         window.setScene(scene);
         window.showAndWait();
+
+        return answer;
     }
 }
