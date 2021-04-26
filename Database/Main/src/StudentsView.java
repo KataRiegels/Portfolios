@@ -1,5 +1,6 @@
 
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.*;
@@ -13,6 +14,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class StudentsView {
@@ -55,9 +57,11 @@ public class StudentsView {
         createAndConfigure();
     }
 
+
+
     private void createAndConfigure(){
-        Startview = new Pane();
-        Startview.setMinSize(500,500);
+        startview = new Pane();
+        startview.setMinSize(500,500);
 
         //Startview.setPadding(new Insets(10,10,10,10));
         //Startview.setVgap(10);
@@ -75,8 +79,64 @@ public class StudentsView {
         Node[] screen2 = { selectCourseLBL, selectCourseCOMB,displayCourseInfoTXT, confirmCourseBTN,returnBTN};
         Node[] screen3 = {selectStudentLBL, selectStudentCOMB, displayStudentInfoTXT, addGradeBTN, confirmStudentBTN};
 
-        Startview.getChildren().addAll(screen1);
-        //Startview.add(exitBtn, 21,2);
+        startview.getChildren().addAll(screen1.getNodes());
+
+        startview.getChildren().addAll(screen2.getNodes());
+        /*
+        Startview.getChildren().addAll(screen3);
+        Startview.getChildren().addAll(screen4);
+        */
+
+        startview.getChildren().add(exitBtn);
+        exitBtn.relocate(550, 20);
+        startview.getChildren().add(returnBTN);
+        returnBTN.relocate(550, 400);
+        // Screen 1
+        continueBTN.relocate(250,200);
+        studentOrCourseLBL.relocate(100, 100);
+        selStudentOrCourseCOMB.relocate(250, 100);
+        ObservableList<String> courseOrStudent = makeObsList("Students", "Courses");
+        selStudentOrCourseCOMB.setItems(courseOrStudent);
+
+
+        // Screen 2
+        selectCourseLBL.relocate(100, 100);
+        selectCourseCOMB.relocate(250, 100);
+        displayCourseInfoTXT.relocate(150, 300);
+        confirmCourseBTN.relocate(250, 150);
+        //return btn
+
+        /*
+        // screen 3
+        selectStudentLBL.relocate(,);
+         selectStudentCOMB.relocate(,) ;
+        displayStudentInfoTXT.relocate(,);
+        addGradeBTN.relocate(,);
+        confirmStudentBTN.relocate(,);
+
+
+        // screen 4
+        selectedStudentLBL.relocate(,);
+        selectNullCourseLBL.relocate(,);
+        selectNullCourseCOMB.relocate(,);
+        selectGradeLBL.relocate(,);
+        selectGradeCOMB.relocate(,);
+        setGradeBTN.relocate(,);
+
+         */
+
+
+    }
+
+    public ObservableList<String> makeObsList(String... strings){
+        ArrayList<String> names= new ArrayList<>();
+        for (String str: strings) names.add(str);
+        //names.add("Students");
+        //names.add("Course");
+        ObservableList<String> studentNames= FXCollections.observableArrayList(names);
+        return  studentNames;
+    }
+
         /*
         Startview.add(getCourseAverageBTN,15,6);
         Startview.add(continueBTN,20,6);
@@ -106,15 +166,56 @@ public class StudentsView {
         //EndStationComB.getSelectionModel().selectFirst();
 
          */
-    }
+
 
 
 
     public Parent asParent(){
-        return Startview;
+        return startview;
     }
+
+
 
 
 }
 
+class Screen{
+    Node[] nodes;
+    Screen prev;
 
+    public Screen(Node[] nodes){
+        this.nodes = nodes;
+        this.prev = this;
+    }
+
+    public void setPrev(Screen prev){
+        this.prev = prev;
+    }
+
+    public void setNodes(Node[] nodes){
+        this.nodes = nodes;
+    }
+
+    public Node[] getNodes() {
+        return nodes;
+    }
+
+    public Screen getPrev() {
+        return prev;
+    }
+
+    public void hide(){
+        for(Node node : nodes ){
+            node.setVisible(false);
+        }
+    }
+
+    public void show(){
+        for(Node node : nodes ){
+            node.setVisible(true);
+        }
+    }
+
+
+
+}
