@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class StudentsController {
     StudentModel model;
     StudentsView view;
+    Screen currentScreen;
 
     public StudentsController(StudentModel model){
         this.model=model;
@@ -30,7 +31,7 @@ public class StudentsController {
         }
     }
 
-    public void clear(Node[] screenArray){
+    public void hide(Node[] screenArray){
         for(Node node : screenArray ){
             node.setVisible(false);
         }
@@ -44,18 +45,34 @@ public class StudentsController {
 
     public void setView(StudentsView view) {
         this.view = view;
+        currentScreen = view.screen1;
         view.exitBtn.setOnAction(e-> Platform.exit());
 
+        view.screen2.hide();
 
         // event handlers:
+        EventHandler<ActionEvent> studentOrCourse = e->goTo(view.screen1, view.screens.get(view.selStudentOrCourseCOMB.getValue()));
+        EventHandler<ActionEvent> returnEvent     = e-> goTo(currentScreen, currentScreen.getPrev());
 
         //EventHandler<ActionEvent> studentOrCourse = e->HandlerPrintTrainRoutes(view.selStudentOrCourse.getValue(), view.test, view.selectCourseCOMB);
         //EventHandler<ActionEvent> PrintTrainTrips = e->handlerTest(view.selectCourseCOMB.getValue(), view.test);
 
-        //view.getCourseAverageBTN.setOnAction(studentOrCourse);
+        view.continueBTN.setOnAction(studentOrCourse);
+        view.returnBTN.setOnAction(returnEvent);
         //view.continueBTN.setOnAction(PrintTrainTrips);
 
     }
+
+
+
+    public void goTo(Screen oldscreen, Screen newscreen){
+        oldscreen.hide();
+        newscreen.show();
+        newscreen.setPrev(oldscreen);
+        currentScreen = newscreen;
+    }
+
+
     public void handlerTest(String ID, TextArea test) {
         String avgGrade = model.getCourseAverage(ID);
         //view.test2.setVisible(true);
@@ -89,13 +106,7 @@ public class StudentsController {
 
                  */
     }
-    public ObservableList<String> studVScourse(){
-        ArrayList<String> names= new ArrayList<>();
-        names.add("Students");
-        names.add("Course");
-        ObservableList<String> studentNames= FXCollections.observableArrayList(names);
-        return  studentNames;
-    }
+
 
 
     public ObservableList<String> getStudentNames(){
