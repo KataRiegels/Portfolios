@@ -138,7 +138,7 @@ public class StudentsController {
         ObservableList<String> ungradedCourses = getUngradedCourseIDs(name);
         if (ungradedCourses.isEmpty()) {
             view.displayStudentInfoTXT.clear();
-            view.displayStudentInfoTXT.appendText("Cannot add grade. Please review student selection");
+            view.displayStudentInfoTXT.appendText("Cannot add grade. Please review student selection.");
         }
         else {
             view.selectNullCourseCOMB.setItems(ungradedCourses);
@@ -155,7 +155,7 @@ public class StudentsController {
         ObservableList<String> ungradedStudents = getUngradedStudents(courseID);
         if (ungradedStudents.isEmpty()) {
             view.displayCourseInfoTXT.clear();
-            view.displayCourseInfoTXT.appendText("Cannot add grade. Please review course selection");
+            view.displayCourseInfoTXT.appendText("Cannot add grade. Please review course selection.");
         }
         else{
             view.selectNullCourseCOMB.setItems(ungradedStudents);

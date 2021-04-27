@@ -11,14 +11,13 @@ import static java.sql.DriverManager.getConnection;
 public class App extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //String query = "select studentName,grade from CourseGrade ";
-        String url = "jdbc:sqlite:C:\\Users\\Mitzie\\Documents\\4th_sem\\Software development\\Portfolios\\Database\\Main\\StudentsDB.db";
+        String url = "jdbc:sqlite:StudentsDB.db";
         StudentModel SDB = new StudentModel(url);
         StudentsController control=new StudentsController(SDB);
         StudentsView view=new StudentsView(control);
         control.setView(view);
-        primaryStage.setTitle("Train Trip Finder");
-        primaryStage.setScene(new Scene(view.asParent(), 600, 475));
+        primaryStage.setTitle("Student Course Registration");
+        primaryStage.setScene(new Scene(view.asParent(), 600, 450));
         primaryStage.show();
         primaryStage.setResizable(false);
     }

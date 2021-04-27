@@ -27,7 +27,7 @@ public class StudentModel {
         this.stmt = conn.createStatement();
     }
 
-    public ArrayList<String> SQLQueryStudentNames(){
+    public ArrayList<String> SQLQueryCourseIDs() {
         ArrayList<String> Names = new ArrayList<>();
         String sql = "Select courseID From Courses;";
         try {

@@ -26,7 +26,7 @@ public class StudentsView {
     Button returnBTN = new Button("Return");
 
     // null screen
-    Label errorMsgLBL = new Label("error:");
+    Label errorMsgLBL = new Label("error: ");
     Button okBTN       = new Button("Okay");
 
 
