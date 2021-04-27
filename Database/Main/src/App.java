@@ -14,7 +14,7 @@ public class App extends Application{
         String url = "jdbc:sqlite:StudentsDB.db";
         StudentModel SDB = new StudentModel(url);
         StudentsController control=new StudentsController(SDB);
-        StudentsView view=new StudentsView(control);
+        StudentsView view=new StudentsView(control);//,primaryStage);
         control.setView(view);
         primaryStage.setTitle("Student Course Registration");
         primaryStage.setScene(new Scene(view.asParent(), 600, 450));

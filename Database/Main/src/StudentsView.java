@@ -21,7 +21,10 @@ import java.util.HashMap;
 
 public class StudentsView {
     private StudentsController control;
-    private Pane Startview;
+    private Pane startview;
+    public Screen nullscreen, screen1, screen2, screen3, screen4;
+    HashMap<String, Screen> screens = new HashMap<>();
+    //private Stage Window;
     Button exitBtn   = new Button("Exit");
     Button returnBTN = new Button("Return");
 
@@ -69,6 +72,7 @@ public class StudentsView {
 
     public StudentsView(StudentsController control){
         this.control = control;
+        //this.Window = primaryStage;
         createAndConfigure();
     }
 
