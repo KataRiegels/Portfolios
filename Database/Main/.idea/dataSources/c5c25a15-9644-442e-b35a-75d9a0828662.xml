@@ -1355,20 +1355,12 @@
     </column>
     <index id="499" parent="170" name="sqlite_autoindex_Courses_1">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>courseID
-courseName
-courseYear
-courseSemester
-teacherName</ColNames>
+      <ColNames>courseID</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="500" parent="170">
-      <ColNames>courseID
-courseName
-courseYear
-courseSemester
-teacherName</ColNames>
+      <ColNames>courseID</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_Courses_1</UnderlyingIndexName>
     </key>

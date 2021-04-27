@@ -27,7 +27,7 @@ public class StudentModel {
         this.stmt = conn.createStatement();
     }
 
-    public ArrayList<String> SQLQueryStudentNames(){
+    public ArrayList<String> SQLQueryCourseIDs() {
         ArrayList<String> Names = new ArrayList<>();
         String sql = "Select courseID From Courses;";
         try {
@@ -87,32 +87,6 @@ public class StudentModel {
         return fullname;
     }
 
-    public ArrayList<String> getAllUngradedCourses() {
-        ArrayList<String> courses = new ArrayList<>();
-        //String primary = "select IFNULL(avg(grade),'null') From Grades WHERE Grades.courseID='" + courseID + "' AND Grades.grade is";
-        String sql = "select courseID from Grades where grade is null;";
-        String name = null;
-        //String primary = "select grade From Grades INNER JOIN Courses ON Grades.courseID=Courses.courseID WHERE Grades.courseID='" + courseID + "' AND Grades.grade is";
-        String avgGrade = "None";
-        //String sql = "select avg(grade) as CourseAverage From Grades INNER JOIN Courses ON Grades.courseID=Courses.courseID WHERE Grades.courseID='" + courseID + "' AND Grades.grade is not null ;";
-        try {
-
-            rs = stmt.executeQuery(sql);
-            while (rs != null && rs.next() ) {
-                    name = rs.getString(1);
-                if (!courses.contains(name)) {
-                    courses.add(name);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        System.out.println(courses);
-        return courses;
-
-
-    }
-
 
     /* CHANGES */
     public String getCourseAverage(String courseID) {
@@ -169,8 +143,23 @@ public class StudentModel {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return courseAndGrade;
+    }
+
+    public ArrayList<String> getUngradedStudents(String courseID) {
+        ArrayList<String> names = new ArrayList<>();
+        String sql = "Select studentName From Grades where courseID = '" + courseID + "' and grade is NULL ;";
+        try {
+            rs = stmt.executeQuery(sql);
+            while (rs != null && rs.next()) {
+                String name = rs.getString(1);
+                names.add(name);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        rs = null;
+        return names;
     }
 
 

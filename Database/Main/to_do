@@ -1,11 +1,20 @@
 
 
-- null graded courses should say "ungraded"
-- make sure buttons don't fuck things up ïf nothing is chosen
-- ("set grades" for courses)
+- DONE null graded courses should say "ungraded"
+- DONE make sure buttons don't fuck things up if nothing is chosen
+- DONE "cannot set grade for this ...."
+- DONE ("set grades" for courses)
 
-
-
+- comments
+- fix naming of variables/functions in code
+- look at imports
+- add "title" instructions to screen
+- revise text on labels etc
+- nullscreen error message!
+- make pretty colors :)
+- report
+- diagram update
+- clean rep
 
 
 
