@@ -1,5 +1,7 @@
 import javafx.application.Application;
-import javafx.event.EventHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener.Change;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -7,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -74,8 +75,8 @@ public class Main extends Application
         showLeft.getItems().addAll(con.getStudents());
         showLeft.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         
-        ListView<String> showlist = new ListView<>();
-        showlist.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        showRight = new ListView<String>();
+        showRight.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         // Buttons
 
@@ -87,6 +88,7 @@ public class Main extends Application
 
         refresh.setOnAction(e -> 
         {
+            showRight.getItems().clear();
             if (showStudents)
             {
                 showLeft.getItems().clear();
@@ -98,8 +100,10 @@ public class Main extends Application
                 showLeft.getItems().addAll(con.getCourses());
             }
         });
+
         viewButton.setOnAction(e -> 
         {
+            showRight.getItems().clear();
             if (showStudents)
             {
                 viewButton.setText("Students");
@@ -118,35 +122,43 @@ public class Main extends Application
             }
         }); 
 
-        // ListView events
-
-        /*showLeft.setOnMouseClicked(e -> 
+        detailsButton.setOnAction(e -> 
         {
-            String current = showLeft.getSelectionModel().getSelectedItem();
-            if (showStudents)
+            String currentTopic = showRight.getSelectionModel().getSelectedItem();
+            String currentTable = showLeft.getSelectionModel().getSelectedItem();
+            String[] temp = currentTopic.split(" ");
+            
+            String str = temp[temp.length-2] + temp[temp.length-1];
+            if (str.equals("NotGraded") && showStudents)
             {
-                showRight.getItems().clear();
-                showRight.getItems().addAll(con.getStudentInfo(current));
-            } 
-            else
-            {
-                showRight.getItems().clear();
-                showRight.getItems().addAll(con.getCourseInfo(current));
-            }
-        });
-        showRight.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-
-            @Override
-            public void handle(MouseEvent click) 
-            {    
-                if (click.getClickCount() == 2)
+                String out = ChangeBox.display("Change Grade", "Input:");
+                if (out != null)
                 {
-                    
+                    con.setGrade(out,currentTable,temp[1]);
+                    showRight.getItems().clear();
+                    showRight.getItems().addAll(con.getStudent(currentTable));
                 }
             }
+        });
 
-        });*/
+        // ListView Listeners
+
+        showLeft.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String current = newValue;
+                if (showStudents)
+                {
+                    showRight.getItems().clear();
+                    showRight.getItems().addAll(con.getStudent(current));
+                } 
+                else
+                {
+                    showRight.getItems().clear();
+                    showRight.getItems().addAll(con.getCourse(current));
+                }
+                }
+        });
 
         // Layouts
 
@@ -157,7 +169,7 @@ public class Main extends Application
 
         VBox rightSide = new VBox(40);
         rightSide.setPadding(new Insets(10,10,10,10));
-        rightSide.getChildren().addAll(label2,showlist,detailsButton);
+        rightSide.getChildren().addAll(label2,showRight,detailsButton);
         rightSide.setAlignment(Pos.CENTER);
 
         VBox middle = new VBox(20);
@@ -179,7 +191,7 @@ public class Main extends Application
     
     private void closeProgram()
     {
-        Boolean answer = AlertBox.display("Before you go!","Are you sure you want to exit!?");
+        Boolean answer = AlertBox.display("Before you go!","Are you sure you want to exit!?",false);
         if (answer)
         {
             window.close();

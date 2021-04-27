@@ -1,8 +1,8 @@
 {
     "java.project.referencedLibraries": [
-        "lib/*.jar",
-        "lib/javafx/lib/*.jar",
-        "lib/jdbc/*.jar"
+        "lib/*",
+        "lib/javafx/lib/*",
+        "lib/jdbc/*"
     ],
     "sqltools.connections": [],
     "java.project.sourcePaths": [

@@ -9,14 +9,16 @@ import javafx.stage.Stage;
 public class AlertBox {
     static boolean answer;
 
-    public static Boolean display(String title, String message)
+    public static Boolean display(String title, String message, boolean notification)
     {
+        // Window
         Stage window = new Stage();
         
         window.initModality(Modality.APPLICATION_MODAL); // Have to close this before doing anything else
         window.setTitle(title);
         window.setMinWidth(250);
 
+        // Labels
         Label label = new Label();
         label.setText(message);
 
