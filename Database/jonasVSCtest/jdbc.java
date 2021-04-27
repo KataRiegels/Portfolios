@@ -66,7 +66,8 @@ public class jdbc
     return stmt.executeQuery(Query);
   }
 
-  // 
+  // --QUERIES--
+  // Returns string arraylist of student names
   public ArrayList<String> getStudents()
   {
     ArrayList<String> result = new ArrayList<String>();
@@ -89,16 +90,42 @@ public class jdbc
     return result;
   }
 
-  public ArrayList<String> getStudent()
+  // Returns ArrayList of a single student's courses and average
+  public ArrayList<String> getStudent(String student)
   {
     ArrayList<String> result = new ArrayList<String>();
     try
     {
-      ResultSet rs = query("SELECT studentName FROM Students");
+      ResultSet rs = query("SELECT grade,courseID FROM Grades WHERE studentName='" + student + "';");
       while(rs.next())
       {
-        String studentName = rs.getString("studentName");
-        result.add(studentName);
+        String str;
+        String course = rs.getString("courseID");
+        Integer grade = rs.getInt("grade");
+        if (rs.wasNull())
+        {
+          str = "Not Graded";
+        } 
+        else
+        {
+          str = grade.toString();
+        }
+        result.add("Course " + course + " grade: " + str);
+      }
+      rs = query("SELECT AVG(grade) AS average FROM Grades WHERE studentName='" + student + "';");
+      while(rs.next())
+      {
+        String str;
+        Integer grade = rs.getInt("average");
+        if (rs.wasNull())
+        {
+          str = "No average available";
+        }
+        else
+        {
+          str = grade.toString();
+        }
+        result.add("Average grade: " + str);
       }
     }
     catch (SQLException e)
@@ -112,29 +139,7 @@ public class jdbc
     return result;
   }
 
-  public ArrayList<String> getStudentInfo(String student)
-  {
-    ArrayList<String> result = new ArrayList<String>();
-    try
-    {
-      ResultSet rs = query("SELECT grade FROM Grades WHERE studentName='" + student + "';");
-      while(rs.next())
-      {
-        String grade = rs.getString("grade");
-        result.add(grade);
-      }
-    }
-    catch (SQLException e)
-    {
-      e.printStackTrace();
-    } 
-    finally
-    {
-      endConnection();
-    }
-    return result;
-  }
-
+  // Returns an ArrayList of courseIDs
   public ArrayList<String> getCourses()
   {
     ArrayList<String> result = new ArrayList<String>();
@@ -143,8 +148,8 @@ public class jdbc
       ResultSet rs = query("SELECT courseID FROM Courses");
       while(rs.next())
       {
-        String studentName = rs.getString("courseID");
-        result.add(studentName);
+        String courseID = rs.getString("courseID");
+        result.add(courseID);
       }
     }
     catch (SQLException e)
@@ -158,16 +163,39 @@ public class jdbc
     return result;
   }
 
-  public ArrayList<String> getCourseInfo(String courseID)
+  // Returns an ArrayList of a single course's overall information
+  public ArrayList<String> getCourse(String courseID)
   {
     ArrayList<String> result = new ArrayList<String>();
     try
     {
-      ResultSet rs = query("SELECT courseID FROM Courses");
+      ResultSet rs = query("SELECT courseName,courseYear,fallSemester,teacherName FROM Courses WHERE courseID='"+courseID+"';");
       while(rs.next())
       {
-        String studentName = rs.getString("courseID");
-        result.add(studentName);
+        result.add("Course Name: " + rs.getString("courseName"));
+        result.add("Course year: " + rs.getString("courseYear"));
+        String str;
+        if (rs.getBoolean("fallSemester"))
+        {
+          str =  "Fall";
+        } 
+        else
+        {
+          str = "Spring";
+        }
+        result.add(str + " Semester");
+        result.add("Teacher: " + rs.getString("teacherName"));
+      }
+      rs = query("SELECT count(courseID) as Attends,AVG(grade) as Average FROM Grades WHERE courseID='"+courseID+"';");
+      while(rs.next())
+      {
+        result.add("Attendees: " + rs.getInt("Attends"));
+        String avg = "" + rs.getInt("Average");
+        if (rs.wasNull())
+        {
+          avg = "None";
+        }
+        result.add("Grade Average: " + avg);
       }
     }
     catch (SQLException e)
@@ -179,5 +207,22 @@ public class jdbc
       endConnection();
     }
     return result;
+  }
+
+  // Sends a grade change to the database
+  public void setGrade(String grade, String studentName, String courseID)
+  {
+    try
+    {
+      query("UPDATE Grades SET grade = " + grade + " WHERE courseID='"+courseID+"' AND studentName='"+studentName+"';");
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    } 
+    finally
+    {
+      endConnection();
+    }
   }
 }
