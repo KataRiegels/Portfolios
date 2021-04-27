@@ -91,7 +91,7 @@ public class StudentModel {
     /* CHANGES */
     public String getCourseAverage(String courseID) {
         //String primary = "select IFNULL(avg(grade),'null') From Grades WHERE Grades.courseID='" + courseID + "' AND Grades.grade is";
-        String primary = "select IFNULL(avg(grade),'none') From Grades WHERE Grades.courseID='" + courseID + "' and grade is not null;";
+        String primary = "select IFNULL(avg(grade),'none') From Grades INNER JOIN Courses ON Grades.courseID=Courses.courseID WHERE Grades.courseID='" + courseID + "' and grade is not null;";
 
         //String primary = "select grade From Grades INNER JOIN Courses ON Grades.courseID=Courses.courseID WHERE Grades.courseID='" + courseID + "' AND Grades.grade is";
         rs = null;
@@ -113,7 +113,7 @@ public class StudentModel {
 
 
     public String getStudentAverage(String ID) {
-        String sql = "Select IFNULL(AVG(grade),'none') From Grades Where studentName ='" + ID + "' and grade is not null;";
+        String sql = "Select IFNULL(AVG(grade),'none') From Grades INNER JOIN Students ON Grades.studentName=Students.studentName Where Grades.studentName ='" + ID + "' and grade is not null;";
         String avgGrade = "none";
         try {
             rs = stmt.executeQuery(sql);
