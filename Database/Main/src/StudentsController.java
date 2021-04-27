@@ -174,8 +174,14 @@ public class StudentsController {
     public void goTo(Screen oldscreen, Screen newscreen){
         oldscreen.hide();
         newscreen.show();
-        newscreen.setPrev(oldscreen);
         currentScreen = newscreen;
+        view.displayCourseInfoTXT.clear();
+        view.displayStudentInfoTXT.clear();
+        view.selStudentOrCourseCOMB.getSelectionModel().clearSelection();
+        //view.selectCourseCOMB.getSelectionModel().clearSelection();
+        //  view.selectStudentCOMB.getSelectionModel().clearSelection();
+        view.selectNullCourseCOMB.getSelectionModel().clearSelection();
+        view.selectGradeCOMB.getSelectionModel().clearSelection();
     }
 
 

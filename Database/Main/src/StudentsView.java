@@ -64,7 +64,8 @@ public class StudentsView {
     Label selectGradeLBL                  = new Label("Select a grade");
     ComboBox<String> selectGradeCOMB      = new ComboBox<>();
     Button setGradeBTN                    = new Button("Set grade for student");
-
+    Label confirmGradeUpdate              = new Label("");
+    Label scr4InstructionsLBL = new Label("");
 
     public StudentsView(StudentsController control){
         this.control = control;
@@ -86,6 +87,7 @@ public class StudentsView {
         screen3.setPrev(screen1);
         screen4.setPrev(screen3);
         nullscreen.setPrev(screen1);
+
 
 
 
@@ -119,6 +121,11 @@ public class StudentsView {
         selStudentOrCourseCOMB.relocate(250, 200);
         ObservableList<String> courseOrStudent = makeObsList("Students", "Courses");
         selStudentOrCourseCOMB.setItems(courseOrStudent);
+        scr1InstructionsLBL.relocate(100, 25);
+        scr1InstructionsLBL.setWrapText(true);
+        scr1InstructionsLBL.setMaxWidth(350);
+        Font font = Font.font("Arial", 26); //, FontWeight.BLACK
+        scr1InstructionsLBL.setFont(font);
 
 
         // Screen 2
@@ -126,7 +133,8 @@ public class StudentsView {
         selectCourseCOMB.relocate(250, 100);
         ObservableList<String> courses = control.getCourseIDs();
         selectCourseCOMB.setItems(courses);
-        displayCourseInfoTXT.relocate(100, 250);
+        displayCourseInfoTXT.relocate(100, 200);
+        displayCourseInfoTXT.setEditable(false);
         displayCourseInfoTXT.setMaxWidth(400);
         displayCourseInfoTXT.setMaxHeight(150);
         confirmCourseBTN.relocate(250, 150);
@@ -145,7 +153,8 @@ public class StudentsView {
         selectStudentCOMB.relocate(250, 100);
         ObservableList<String> students = control.getStudentNames();
         selectStudentCOMB.setItems(students);
-        displayStudentInfoTXT.relocate(100,250);
+        displayStudentInfoTXT.relocate(80,200);
+        displayStudentInfoTXT.setEditable(false);
         displayStudentInfoTXT.setMaxWidth(400);
         displayStudentInfoTXT.setMaxHeight(150);
         addGradeBTN.relocate(40,400);
@@ -157,11 +166,14 @@ public class StudentsView {
 
 
         // screen 4
-        selectedStudentLBL.relocate(100,50);
-        selectNullCourseCOMB.relocate(250,70);
-        selectNullCourseLBL.relocate(100,70);
-        selectGradeLBL.relocate(100,180);
-        selectGradeCOMB.relocate(250,180);
+        selectedStudentLBL.setFont(new Font("Arial", 20));
+        selectedStudentLBL.setTextFill(Color.color(0.9,0,1));
+        selectedStudentLBL.setTextAlignment(TextAlignment.CENTER);
+        selectedStudentLBL.relocate(150,65);
+        selectNullCourseCOMB.relocate(250,120);
+        selectNullCourseLBL.relocate(100,120);
+        selectGradeLBL.relocate(100,220);
+        selectGradeCOMB.relocate(250,220);
         ObservableList<String> possibleGrades = makeObsList("-3", "00", "02", "4", "7", "10", "12");
         selectGradeCOMB.setItems(possibleGrades);
         setGradeBTN.relocate(100,320);
