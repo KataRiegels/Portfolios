@@ -17,7 +17,7 @@ public class Main extends Application
     // Global Variables
     Stage window;
     Boolean showStudents;
-    String db = "jdbc:sqlite:/home/xilas/Desktop/gits/Portfolios/Database/Main/StudentsDB.db";
+    String db = "jdbc:sqlite:Students.db";
     jdbc con = new jdbc(db);
     ListView<String> showLeft,showRight;
 
@@ -120,7 +120,7 @@ public class Main extends Application
 
         // ListView events
 
-        showLeft.setOnMouseClicked(e -> 
+        /*showLeft.setOnMouseClicked(e -> 
         {
             String current = showLeft.getSelectionModel().getSelectedItem();
             if (showStudents)
@@ -146,7 +146,7 @@ public class Main extends Application
                 }
             }
 
-        });
+        });*/
 
         // Layouts
 

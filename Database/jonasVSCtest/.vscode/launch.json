@@ -14,7 +14,7 @@
             "type": "java",
             "name": "Launch Main",
             "request": "launch",
-            "vmArgs": "--module-path /home/xilas/Desktop/gits/refs/javafx/lib --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path lib/javafx/lib --add-modules javafx.controls,javafx.fxml",
             "mainClass": "Main",
             "projectName": "jonasVSCtest_3e0dfe5"
         }
