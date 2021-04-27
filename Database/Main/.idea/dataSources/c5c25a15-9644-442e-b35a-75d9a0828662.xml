@@ -1376,90 +1376,99 @@
       <Position>3</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <foreign-key id="504" parent="171">
+    <index id="504" parent="171" name="sqlite_autoindex_Grades_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>studentName
+courseID</ColNames>
+      <ColumnCollations></ColumnCollations>
+      <Unique>1</Unique>
+    </index>
+    <key id="505" parent="171">
+      <ColNames>studentName
+courseID</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_Grades_1</UnderlyingIndexName>
+    </key>
+    <foreign-key id="506" parent="171">
       <ColNames>studentName</ColNames>
       <RefTableName>Students</RefTableName>
       <RefColNames>studentName</RefColNames>
       <OnDelete>restrict</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <foreign-key id="505" parent="171">
+    <foreign-key id="507" parent="171">
       <ColNames>courseID</ColNames>
       <RefTableName>Courses</RefTableName>
       <RefColNames>courseID</RefColNames>
       <OnDelete>restrict</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="506" parent="172" name="studentName">
+    <column id="508" parent="172" name="studentName">
       <Position>1</Position>
       <DataType>TEXT|0s</DataType>
     </column>
-    <column id="507" parent="172" name="townName">
+    <column id="509" parent="172" name="townName">
       <Position>2</Position>
       <DataType>TEXT|0s</DataType>
     </column>
-    <index id="508" parent="172" name="sqlite_autoindex_Students_1">
+    <index id="510" parent="172" name="sqlite_autoindex_Students_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>studentName</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="509" parent="172">
+    <key id="511" parent="172">
       <ColNames>studentName</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_Students_1</UnderlyingIndexName>
     </key>
-    <foreign-key id="510" parent="172">
+    <foreign-key id="512" parent="172">
       <ColNames>townName</ColNames>
       <RefTableName>Towns</RefTableName>
       <RefColNames>townName</RefColNames>
       <OnDelete>restrict</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="511" parent="173" name="townName">
+    <column id="513" parent="173" name="townName">
       <Position>1</Position>
       <DataType>TEXT|0s</DataType>
     </column>
-    <column id="512" parent="173" name="country">
+    <column id="514" parent="173" name="country">
       <Position>2</Position>
       <DataType>TEXT|0s</DataType>
     </column>
-    <column id="513" parent="173" name="postal">
+    <column id="515" parent="173" name="postal">
       <Position>3</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <index id="514" parent="173" name="sqlite_autoindex_Towns_1">
+    <index id="516" parent="173" name="sqlite_autoindex_Towns_1">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>townName
-country
-postal</ColNames>
+      <ColNames>townName</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
-    <key id="515" parent="173">
-      <ColNames>townName
-country
-postal</ColNames>
+    <key id="517" parent="173">
+      <ColNames>townName</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_Towns_1</UnderlyingIndexName>
     </key>
-    <column id="516" parent="174" name="type">
+    <column id="518" parent="174" name="type">
       <Position>1</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="517" parent="174" name="name">
+    <column id="519" parent="174" name="name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="518" parent="174" name="tbl_name">
+    <column id="520" parent="174" name="tbl_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="519" parent="174" name="rootpage">
+    <column id="521" parent="174" name="rootpage">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="520" parent="174" name="sql">
+    <column id="522" parent="174" name="sql">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>
