@@ -178,7 +178,7 @@ public class jdbc
         if (rs.getBoolean("fallSemester"))
         {
           str =  "Fall";
-        } 
+        }
         else
         {
           str = "Spring";

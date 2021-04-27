@@ -1,7 +1,6 @@
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener.Change;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -88,16 +87,19 @@ public class Main extends Application
 
         refresh.setOnAction(e -> 
         {
+            String current = showLeft.getSelectionModel().getSelectedItem();
             showRight.getItems().clear();
             if (showStudents)
             {
                 showLeft.getItems().clear();
                 showLeft.getItems().addAll(con.getStudents());
+                showRight.getItems().addAll(con.getStudent(current));
             }
             else
             {
                 showLeft.getItems().clear();
                 showLeft.getItems().addAll(con.getCourses());
+                showRight.getItems().addAll(con.getStudent(current));
             }
         });
 
