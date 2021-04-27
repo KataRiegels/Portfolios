@@ -138,13 +138,12 @@ public class Main extends Application
         {
 
             @Override
-            public void handle(MouseEvent click) {
-                
+            public void handle(MouseEvent click) 
+            {    
                 if (click.getClickCount() == 2)
                 {
                     
                 }
-                
             }
 
         });
