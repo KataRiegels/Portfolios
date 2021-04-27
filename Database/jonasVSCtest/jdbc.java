@@ -112,6 +112,29 @@ public class jdbc
     return result;
   }
 
+  public ArrayList<String> getStudentInfo(String student)
+  {
+    ArrayList<String> result = new ArrayList<String>();
+    try
+    {
+      ResultSet rs = query("SELECT grade FROM Grades WHERE studentName='" + student + "';");
+      while(rs.next())
+      {
+        String grade = rs.getString("grade");
+        result.add(grade);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    } 
+    finally
+    {
+      endConnection();
+    }
+    return result;
+  }
+
   public ArrayList<String> getCourses()
   {
     ArrayList<String> result = new ArrayList<String>();
@@ -135,4 +158,26 @@ public class jdbc
     return result;
   }
 
+  public ArrayList<String> getCourseInfo(String courseID)
+  {
+    ArrayList<String> result = new ArrayList<String>();
+    try
+    {
+      ResultSet rs = query("SELECT courseID FROM Courses");
+      while(rs.next())
+      {
+        String studentName = rs.getString("courseID");
+        result.add(studentName);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    } 
+    finally
+    {
+      endConnection();
+    }
+    return result;
+  }
 }

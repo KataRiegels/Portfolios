@@ -1,15 +1,8 @@
 {
     "java.project.referencedLibraries": [
-        "/home/xilas/Desktop/gits/Portfolios/Database/jonasVSCtest/lib/*",
-        "/home/xilas/Desktop/gits/refs/jdbc/sqlite-jdbc-3.34.0.jar",
-        "/home/xilas/Desktop/gits/refs/javafx/lib/javafx.base.jar",
-        "/home/xilas/Desktop/gits/refs/javafx/lib/javafx.controls.jar",
-        "/home/xilas/Desktop/gits/refs/javafx/lib/javafx.fxml.jar",
-        "/home/xilas/Desktop/gits/refs/javafx/lib/javafx.graphics.jar",
-        "/home/xilas/Desktop/gits/refs/javafx/lib/javafx.media.jar",
-        "/home/xilas/Desktop/gits/refs/javafx/lib/javafx.swing.jar",
-        "/home/xilas/Desktop/gits/refs/javafx/lib/javafx.web.jar",
-        "/home/xilas/Desktop/gits/refs/javafx/lib/javafx-swt.jar"
+        "lib/*.jar",
+        "lib/javafx/lib/*.jar",
+        "lib/jdbc/*.jar"
     ],
     "sqltools.connections": [],
     "java.project.sourcePaths": [
