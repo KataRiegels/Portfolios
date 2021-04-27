@@ -20,6 +20,11 @@ public class StudentsView {
     Button exitBtn   = new Button("Exit");
     Button returnBTN = new Button("Return");
 
+    // null screen
+    Label errorMsgLBL = new Label("error:");
+    Button okBTN       = new Button("Okay");
+
+
     // Screen 1
     Button continueBTN       = new Button("Continue");
     Label studentOrCourseLBL = new Label("Select course or student:");
@@ -30,6 +35,8 @@ public class StudentsView {
     ComboBox<String> selectCourseCOMB = new ComboBox<>();
     TextArea displayCourseInfoTXT     = new TextArea();
     Button confirmCourseBTN           = new Button("Confirm");
+    Button addCourseGradeBTN          = new Button("Add grades for course");
+
     //return btn
 
     // screen 3
@@ -72,9 +79,23 @@ public class StudentsView {
         column3.setPercentWidth(50);*/
         //Startview.getColumnConstraints().addAll(column1, column2,column3); // each get 50% of width
 
-        Node[] screen1 = {continueBTN, studentOrCourseLBL, selStudentOrCourseCOMB};
-        Node[] screen2 = { selectCourseLBL, selectCourseCOMB,displayCourseInfoTXT, confirmCourseBTN,returnBTN};
-        Node[] screen3 = {selectStudentLBL, selectStudentCOMB, displayStudentInfoTXT, addGradeBTN, confirmStudentBTN};
+        nullscreen = new Screen(new Node[]{errorMsgLBL});
+        screen1 = new Screen(new Node[] {continueBTN, studentOrCourseLBL, selStudentOrCourseCOMB});
+        screen2 = new Screen(new Node[] {selectCourseLBL, selectCourseCOMB, displayCourseInfoTXT, confirmCourseBTN, addCourseGradeBTN});
+        screen3 = new Screen(new Node[] {selectStudentLBL, selectStudentCOMB, displayStudentInfoTXT, addGradeBTN, confirmStudentBTN});
+        screen4 = new Screen(new Node[] {selectedStudentLBL, selectNullCourseLBL, selectNullCourseCOMB, selectGradeLBL, selectGradeCOMB, setGradeBTN, confirmGradeUpdate});
+        screen2.setPrev(screen1);
+        screen3.setPrev(screen1);
+        screen4.setPrev(screen3);
+        nullscreen.setPrev(screen1);
+
+
+
+        screens.put("Courses", screen2);
+        screens.put("Students", screen3);
+        screens.put(null, nullscreen);
+
+        //screens.put("Add grade", screen4);
 
         startview.getChildren().addAll(screen1.getNodes());
 
@@ -82,13 +103,18 @@ public class StudentsView {
 
         startview.getChildren().addAll(screen3.getNodes());
         startview.getChildren().addAll(screen4.getNodes());
-        screen2.addNode(addGradeBTN);
+        startview.getChildren().addAll(nullscreen.getNodes());
 
 
         startview.getChildren().add(exitBtn);
         exitBtn.relocate(550, 20);
         startview.getChildren().add(returnBTN);
         returnBTN.relocate(530, 400);
+
+        // null screen
+        errorMsgLBL.relocate(50, 100);
+        nullscreen.setTrigger(null);
+
 
         // Screen 1
         continueBTN.relocate(250,200);
@@ -107,6 +133,8 @@ public class StudentsView {
         displayCourseInfoTXT.setMaxWidth(400);
         displayCourseInfoTXT.setMaxHeight(150);
         confirmCourseBTN.relocate(250, 150);
+        addCourseGradeBTN.relocate(40,400);
+        screen2.setTrigger(courseOrStudent.get(1));
         //return btn
 
 
@@ -120,6 +148,7 @@ public class StudentsView {
         displayStudentInfoTXT.setMaxHeight(150);
         addGradeBTN.relocate(40,400);
         confirmStudentBTN.relocate(250,150);
+        screen2.setTrigger(courseOrStudent.get(0));
 
 
         // screen 4
@@ -143,35 +172,7 @@ public class StudentsView {
         return  studentNames;
     }
 
-        /*
-        Startview.add(getCourseAverageBTN,15,6);
-        Startview.add(continueBTN,20,6);
 
-        getCourseAverageBTN.setVisible(true);
-        Startview.add(courseSelectionLBL,1,1);
-        //Startview.add(EndstationLbl,1,3);
-        Startview.add(TrainText,1,7,15,7);
-        Startview.add(test,50,50,10,10);
-        test.setEditable(false);
-        Startview.add(test2,50,50,10,10);
-        test2.setVisible(false);
-        Startview.add(selStudentOrCourse, 15, 4);
-        Startview.add(selectCourseCOMB, 17,1);
-        selectCourseCOMB.setVisible(false);
-        //Startview.add(EndStationComB,15,3);
-
-        ObservableList<String> stations=control.getStudentNames();
-        ObservableList<String> studVScourse = control.studVScourse();
-
-        selectCourseCOMB.setItems(stations);
-        //EndStationComB.setItems(stations);
-        selectCourseCOMB.getSelectionModel().selectFirst();
-        selStudentOrCourse.setItems(studVScourse);
-        selStudentOrCourse.getSelectionModel().selectFirst();
-
-        //EndStationComB.getSelectionModel().selectFirst();
-
-         */
 
 
 
@@ -179,19 +180,24 @@ public class StudentsView {
     public Parent asParent(){
         return startview;
     }
-
-
-
-
 }
 
 class Screen{
     Node[] nodes;
     Screen prev;
+    String trigger = "none";
 
     public Screen(Node[] nodes){
         this.nodes = nodes;
         this.prev = this;
+    }
+
+    public String getTrigger(){
+        return trigger;
+    }
+
+    public void setTrigger(String trigger) {
+        this.trigger = trigger;
     }
 
     public void setPrev(Screen prev){

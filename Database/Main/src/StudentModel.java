@@ -169,8 +169,23 @@ public class StudentModel {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return courseAndGrade;
+    }
+
+    public ArrayList<String> getUngradedStudents(String courseID) {
+        ArrayList<String> names = new ArrayList<>();
+        String sql = "Select studentName From Grades where courseID = '" + courseID + "' and grade is NULL ;";
+        try {
+            rs = stmt.executeQuery(sql);
+            while (rs != null && rs.next()) {
+                String name = rs.getString(1);
+                names.add(name);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        rs = null;
+        return names;
     }
 
 
