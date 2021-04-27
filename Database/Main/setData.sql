@@ -9,10 +9,10 @@ CREATE TABLE IF NOT EXISTS Courses(
     courseID TEXT,
     courseName TEXT,
     courseYear INTEGER,
-    fallSemester BOOLEAN,
+    courseSemester TEXT,
     teacherName TEXT,
 
-    primary key (courseID,courseName,courseYear,fallSemester,teacherName)
+    primary key (courseID,courseName,courseYear,courseSemester,teacherName)
 );
 
 CREATE TABLE IF NOT EXISTS Towns(
@@ -48,7 +48,7 @@ VALUES  ('Aisha Lincoln',   'SDF19',       12),
         ('Aisha Lincoln',   'ES1F19',      10),
         ('Anya Nielsen',    'SDS20',       NULL),
         ('Anya Nielsen',    'ES1F19',      12),
-        ('Alfred Jensen',   'SDF19',       NULL),
+        ('Alfred Jensen',   'SDF19',       7),
         ('Alfred Jensen',   'ES1F19',      10),
         ('Berta Bertelsen', 'SDS20',       NULL),
         ('Berta Bertelsen', 'ES1F19',      2),
@@ -65,10 +65,10 @@ VALUES  ('Aisha Lincoln',   'SDF19',       12),
         ('Janet Jensen',    'SDS20',       NULL),
         ('Janet Jensen',    'ES1F19',      7);
 
-INSERT INTO Courses(courseID, courseName, courseYear, fallSemester, teacherName)
-VALUES  ('SDF19',   'Software Development',     2019,   TRUE,    'Line'),
-        ('SDS20',   'Software Development',     2020,   FALSE,   'Line'),
-        ('ES1F19',  'Essential Computing 1',    2019,   TRUE,    'Ebbe');
+INSERT INTO Courses(courseID, courseName, courseYear, courseSemester, teacherName)
+VALUES  ('SDF19',   'Software Development',     2019,   'fall',     'Line Reinhardt'),
+        ('SDS20',   'Software Development',     2020,   'spring',   'Line Reinhardt'),
+        ('ES1F19',  'Essential Computing 1',    2019,   'fall',     'Ebbe Vang');
 
 INSERT INTO Students(studentName, townName)
 VALUES  ('Aisha Lincoln',    'Nykøbing F'),

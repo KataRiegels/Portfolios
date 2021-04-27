@@ -1345,9 +1345,9 @@
       <Position>3</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="497" parent="170" name="fallSemester">
+    <column id="497" parent="170" name="courseSemester">
       <Position>4</Position>
-      <DataType>BOOLEAN|0s</DataType>
+      <DataType>TEXT|0s</DataType>
     </column>
     <column id="498" parent="170" name="teacherName">
       <Position>5</Position>
@@ -1358,7 +1358,7 @@
       <ColNames>courseID
 courseName
 courseYear
-fallSemester
+courseSemester
 teacherName</ColNames>
       <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
@@ -1367,7 +1367,7 @@ teacherName</ColNames>
       <ColNames>courseID
 courseName
 courseYear
-fallSemester
+courseSemester
 teacherName</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_Courses_1</UnderlyingIndexName>

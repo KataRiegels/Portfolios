@@ -2,18 +2,15 @@
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.text.Text;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -82,15 +79,17 @@ public class StudentsView {
         startview.getChildren().addAll(screen1.getNodes());
 
         startview.getChildren().addAll(screen2.getNodes());
-        /*
-        Startview.getChildren().addAll(screen3);
-        Startview.getChildren().addAll(screen4);
-        */
+
+        startview.getChildren().addAll(screen3.getNodes());
+        startview.getChildren().addAll(screen4.getNodes());
+        screen2.addNode(addGradeBTN);
+
 
         startview.getChildren().add(exitBtn);
         exitBtn.relocate(550, 20);
         startview.getChildren().add(returnBTN);
-        returnBTN.relocate(550, 400);
+        returnBTN.relocate(530, 400);
+
         // Screen 1
         continueBTN.relocate(250,200);
         studentOrCourseLBL.relocate(100, 100);
@@ -102,30 +101,37 @@ public class StudentsView {
         // Screen 2
         selectCourseLBL.relocate(100, 100);
         selectCourseCOMB.relocate(250, 100);
-        displayCourseInfoTXT.relocate(150, 300);
+        ObservableList<String> courses = control.getCourseIDs();
+        selectCourseCOMB.setItems(courses);
+        displayCourseInfoTXT.relocate(100, 250);
+        displayCourseInfoTXT.setMaxWidth(400);
+        displayCourseInfoTXT.setMaxHeight(150);
         confirmCourseBTN.relocate(250, 150);
         //return btn
 
-        /*
+
         // screen 3
-        selectStudentLBL.relocate(,);
-         selectStudentCOMB.relocate(,) ;
-        displayStudentInfoTXT.relocate(,);
-        addGradeBTN.relocate(,);
-        confirmStudentBTN.relocate(,);
+        selectStudentLBL.relocate(100,100);
+        selectStudentCOMB.relocate(250, 100);
+        ObservableList<String> students = control.getStudentNames();
+        selectStudentCOMB.setItems(students);
+        displayStudentInfoTXT.relocate(100,250);
+        displayStudentInfoTXT.setMaxWidth(400);
+        displayStudentInfoTXT.setMaxHeight(150);
+        addGradeBTN.relocate(40,400);
+        confirmStudentBTN.relocate(250,150);
 
 
         // screen 4
-        selectedStudentLBL.relocate(,);
-        selectNullCourseLBL.relocate(,);
-        selectNullCourseCOMB.relocate(,);
-        selectGradeLBL.relocate(,);
-        selectGradeCOMB.relocate(,);
-        setGradeBTN.relocate(,);
-
-         */
-
-
+        selectedStudentLBL.relocate(100,50);
+        selectNullCourseCOMB.relocate(250,70);
+        selectNullCourseLBL.relocate(100,70);
+        selectGradeLBL.relocate(100,180);
+        selectGradeCOMB.relocate(250,180);
+        ObservableList<String> possibleGrades = makeObsList("-3", "00", "02", "4", "7", "10", "12");
+        selectGradeCOMB.setItems(possibleGrades);
+        setGradeBTN.relocate(100,300);
+        confirmGradeUpdate.relocate(250,350);
     }
 
     public ObservableList<String> makeObsList(String... strings){
@@ -216,6 +222,10 @@ class Screen{
         }
     }
 
+    public void addNode(Node node){
+        nodes = Arrays.copyOf(nodes, nodes.length+1);
+        nodes[nodes.length-1] = node;
 
+    }
 
 }
