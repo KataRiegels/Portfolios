@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS Courses(
     courseSemester TEXT,
     teacherName TEXT,
 
-    primary key (courseID,courseName,courseYear,courseSemester,teacherName)
+    primary key (courseID)
 );
 
 CREATE TABLE IF NOT EXISTS Towns(
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Towns(
     country TEXT,
     postal INTEGER,
 
-    primary key (townName,country,postal)
+    primary key (townName)
 );
 
 CREATE TABLE IF NOT EXISTS Students(

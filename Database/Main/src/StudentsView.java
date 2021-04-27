@@ -8,6 +8,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
+//import javafx.scene.text.*;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,8 +29,11 @@ public class StudentsView {
 
 
     // Screen 1
+
     Button continueBTN       = new Button("Continue");
     Label studentOrCourseLBL = new Label("Select course or student:");
+    Label scr1InstructionsLBL = new Label("Select an option to see information or add grades.");
+
     ComboBox<String> selStudentOrCourseCOMB =new ComboBox<>();
 
     // Screen 2
@@ -36,6 +42,8 @@ public class StudentsView {
     TextArea displayCourseInfoTXT     = new TextArea();
     Button confirmCourseBTN           = new Button("Confirm");
     Button addCourseGradeBTN          = new Button("Add grades for course");
+    Label scr2InstructionsLBL         = new Label("Choose a course you would like to see information about or add grades.");
+
 
     //return btn
 
@@ -45,7 +53,7 @@ public class StudentsView {
     TextArea displayStudentInfoTXT     = new TextArea();
     Button addGradeBTN                 = new Button("Add grade for student");
     Button confirmStudentBTN           = new Button("Confirm");
-
+    Label scr3InstructionsLBL          = new Label("Choose a student you would like to see information about or add grade.");
 
     // screen 4
     Label selectedStudentLBL              = new Label("");
@@ -66,24 +74,12 @@ public class StudentsView {
     private void createAndConfigure(){
         startview = new Pane();
         startview.setMinSize(500,500);
-
-        //Startview.setPadding(new Insets(10,10,10,10));
-        //Startview.setVgap(10);
-        //Startview.setHgap(10);
-        //Startview.setGridLinesVisible(true);
-        /*ColumnConstraints column1 = new ColumnConstraints();
-        column1.setPercentWidth(50);
-        ColumnConstraints column2 = new ColumnConstraints();
-        column2.setPercentWidth(50);
-        ColumnConstraints column3 = new ColumnConstraints();
-        column3.setPercentWidth(50);*/
-        //Startview.getColumnConstraints().addAll(column1, column2,column3); // each get 50% of width
-
+        startview.setStyle("-fx-background-color: #d3ccff;");
         nullscreen = new Screen(new Node[]{errorMsgLBL});
-        screen1 = new Screen(new Node[] {continueBTN, studentOrCourseLBL, selStudentOrCourseCOMB});
-        screen2 = new Screen(new Node[] {selectCourseLBL, selectCourseCOMB, displayCourseInfoTXT, confirmCourseBTN, addCourseGradeBTN});
-        screen3 = new Screen(new Node[] {selectStudentLBL, selectStudentCOMB, displayStudentInfoTXT, addGradeBTN, confirmStudentBTN});
-        screen4 = new Screen(new Node[] {selectedStudentLBL, selectNullCourseLBL, selectNullCourseCOMB, selectGradeLBL, selectGradeCOMB, setGradeBTN, confirmGradeUpdate});
+        screen1 = new Screen(new Node[] {continueBTN, studentOrCourseLBL, selStudentOrCourseCOMB, scr1InstructionsLBL});
+        screen2 = new Screen(new Node[] {selectCourseLBL, selectCourseCOMB, displayCourseInfoTXT, confirmCourseBTN, addCourseGradeBTN, scr2InstructionsLBL});
+        screen3 = new Screen(new Node[] {selectStudentLBL, selectStudentCOMB, displayStudentInfoTXT, addGradeBTN, confirmStudentBTN, scr3InstructionsLBL});
+        screen4 = new Screen(new Node[] {selectedStudentLBL, selectNullCourseLBL, selectNullCourseCOMB, selectGradeLBL, selectGradeCOMB, setGradeBTN, confirmGradeUpdate, scr4InstructionsLBL});
         screen2.setPrev(screen1);
         screen3.setPrev(screen1);
         screen4.setPrev(screen3);
@@ -95,7 +91,6 @@ public class StudentsView {
         screens.put("Students", screen3);
         screens.put(null, nullscreen);
 
-        //screens.put("Add grade", screen4);
 
         startview.getChildren().addAll(screen1.getNodes());
 
@@ -113,13 +108,13 @@ public class StudentsView {
 
         // null screen
         errorMsgLBL.relocate(50, 100);
-        nullscreen.setTrigger(null);
-
 
         // Screen 1
-        continueBTN.relocate(250,200);
-        studentOrCourseLBL.relocate(100, 100);
-        selStudentOrCourseCOMB.relocate(250, 100);
+        continueBTN.relocate(250,350);
+        //continueBTN.setStyle("-fx-foreground-color: red;");
+
+        studentOrCourseLBL.relocate(100, 200);
+        selStudentOrCourseCOMB.relocate(250, 200);
         ObservableList<String> courseOrStudent = makeObsList("Students", "Courses");
         selStudentOrCourseCOMB.setItems(courseOrStudent);
 
@@ -134,7 +129,12 @@ public class StudentsView {
         displayCourseInfoTXT.setMaxHeight(150);
         confirmCourseBTN.relocate(250, 150);
         addCourseGradeBTN.relocate(40,400);
-        screen2.setTrigger(courseOrStudent.get(1));
+        scr2InstructionsLBL.relocate(100, 30);
+        scr2InstructionsLBL.setWrapText(true);
+        scr2InstructionsLBL.setMaxWidth(400);
+        scr2InstructionsLBL.setFont(new Font("Arial", 20));
+
+
         //return btn
 
 
@@ -148,7 +148,10 @@ public class StudentsView {
         displayStudentInfoTXT.setMaxHeight(150);
         addGradeBTN.relocate(40,400);
         confirmStudentBTN.relocate(250,150);
-        screen2.setTrigger(courseOrStudent.get(0));
+        scr3InstructionsLBL.relocate(100, 30);
+        scr3InstructionsLBL.setWrapText(true);
+        scr3InstructionsLBL.setMaxWidth(400);
+        scr3InstructionsLBL.setFont(new Font("Arial", 20));
 
 
         // screen 4
@@ -159,15 +162,19 @@ public class StudentsView {
         selectGradeCOMB.relocate(250,180);
         ObservableList<String> possibleGrades = makeObsList("-3", "00", "02", "4", "7", "10", "12");
         selectGradeCOMB.setItems(possibleGrades);
-        setGradeBTN.relocate(100,300);
-        confirmGradeUpdate.relocate(250,350);
+        setGradeBTN.relocate(100,320);
+        confirmGradeUpdate.relocate(250,370);
+        scr4InstructionsLBL.relocate(100, 30);
+        scr4InstructionsLBL.setWrapText(true);
+        scr4InstructionsLBL.setMaxWidth(400);
+        scr4InstructionsLBL.setFont(new Font("Arial", 20));
+
+
     }
 
     public ObservableList<String> makeObsList(String... strings){
         ArrayList<String> names= new ArrayList<>();
         for (String str: strings) names.add(str);
-        //names.add("Students");
-        //names.add("Course");
         ObservableList<String> studentNames= FXCollections.observableArrayList(names);
         return  studentNames;
     }
@@ -227,6 +234,10 @@ class Screen{
             node.setVisible(true);
         }
     }
+
+
+
+
 
     public void addNode(Node node){
         nodes = Arrays.copyOf(nodes, nodes.length+1);

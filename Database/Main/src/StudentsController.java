@@ -57,7 +57,7 @@ public class StudentsController {
 
         EventHandler<ActionEvent> courseConfirm     = e->courseInfoBox(view.selectCourseCOMB.getValue());
         EventHandler<ActionEvent> studentConfirm    = e->studentInfoBox(view.selectStudentCOMB.getValue());
-        EventHandler<ActionEvent> updateGrade       = e->setNewGrade(view.selectNullCourseCOMB.getValue(), view.selectGradeCOMB.getValue());
+        EventHandler<ActionEvent> updateGrade       = e->setNewGrade(view.selectGradeCOMB.getValue());
 
 
 
@@ -68,17 +68,32 @@ public class StudentsController {
         view.confirmStudentBTN.setOnAction(studentConfirm);
         view.setGradeBTN.setOnAction(updateGrade);
         view.addCourseGradeBTN.setOnAction(addingCourseGrades);
-
-
-        //view.continueBTN.setOnAction(PrintTrainTrips);
-
     }
 
 
-    public void setNewGrade(String courseID, String grade){
-        String student = view.selectedStudentLBL.getText();
-        model.updateGrade(student, courseID, Integer.parseInt(grade));
-        view.confirmGradeUpdate.setText("Grade has been updated");
+    public void setNewGrade(String grade){
+        if (view.selectNullCourseCOMB.getValue() == null || grade == null){
+            view.confirmGradeUpdate.setText("Please select both a course and grade");
+
+        }else{
+            String student, courseID;
+            if (currentScreen.getPrev().equals(view.screen2)){
+                System.out.println("from screen2");
+                student = view.selectNullCourseCOMB.getValue();
+
+                courseID = view.selectCourseCOMB.getValue();
+                System.out.println("Student: " + student + " course: " + courseID );
+            } else{
+                System.out.println("else");
+                student = view.selectStudentCOMB.getValue();
+                courseID = view.selectNullCourseCOMB.getValue();
+            }
+            model.updateGrade(student, courseID, Integer.parseInt(grade));
+            view.confirmGradeUpdate.setText("Grade has been updated");
+        }
+        view.selectCourseCOMB.getSelectionModel().clearSelection();
+        view.selectStudentCOMB.getSelectionModel().clearSelection();
+
     }
 
 
@@ -127,7 +142,7 @@ public class StudentsController {
         }
         else {
             view.selectNullCourseCOMB.setItems(ungradedCourses);
-
+            view.scr4InstructionsLBL.setText("Select a course and grade to add it.");
             view.selectedStudentLBL.setText(name);
             newscreen.setPrev(oldscreen);
             goTo(oldscreen, newscreen);
@@ -146,6 +161,8 @@ public class StudentsController {
             view.selectNullCourseCOMB.setItems(ungradedStudents);
             ArrayList<String> courseName = model.getCourseName(courseID);
             String course_ = courseName.get(0) + " - "  + courseName.get(1) + " - " + courseName.get(2);
+            view.scr4InstructionsLBL.setText("Select a student and a grade to add it.");
+
             view.selectedStudentLBL.setText(course_);
             newscreen.setPrev(oldscreen);
             goTo(oldscreen, newscreen);
@@ -180,15 +197,9 @@ public class StudentsController {
         return  courseNames;
     }
 
-
     public ObservableList<String> getUngradedStudents(String courseID){
         ArrayList<String> names= model.getUngradedStudents(courseID);
         ObservableList<String> studentNames= FXCollections.observableArrayList(names);
         return  studentNames;
     }
-
-
-
-
-
 }

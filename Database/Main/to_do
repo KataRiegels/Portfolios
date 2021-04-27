@@ -1,11 +1,16 @@
 
 
 - DONE null graded courses should say "ungraded"
-- make sure buttons don't fuck things up if nothing is chosen
-- "cannot set grade for this ...."
+- DONE make sure buttons don't fuck things up if nothing is chosen
+- DONE "cannot set grade for this ...."
 - DONE ("set grades" for courses)
 
-
+- comments
+- fix naming of variables in code
+- add "title" instructions to screen
+- make pretty colors :)
+- report
+- diagram update
 
 
 
