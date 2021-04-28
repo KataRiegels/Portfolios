@@ -1,22 +1,15 @@
 
-
+// importing required classes / packages
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
-
-import javafx.scene.*;
-
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.scene.paint.Color;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.*;
-//import javafx.scene.text.*;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import javafx.scene.paint.Color;
+import java.util.*;
 
 
 public class StudentsView {
@@ -24,116 +17,114 @@ public class StudentsView {
     private Pane startview;
     public Screen nullscreen, screen1, screen2, screen3, screen4;
     HashMap<String, Screen> screens = new HashMap<>();
-    //private Stage Window;
+
+    // Creating buttons present on each screen
     Button exitBtn   = new Button("Exit");
     Button returnBTN = new Button("Return");
 
-    // null screen
-    Label errorMsgLBL = new Label("error: ");
-    Button okBTN       = new Button("Okay");
+    // Creating labels, buttons etc. for each individual screen:
 
-
-    // Screen 1
-
-    Button continueBTN       = new Button("Continue");
-    Label studentOrCourseLBL = new Label("Select course or student:");
-    Label scr1InstructionsLBL = new Label("Select an option to see information or add grades.");
-
+    // Screen 1: for choosing to view information about either courses or students
     ComboBox<String> selStudentOrCourseCOMB =new ComboBox<>();
+    Button continueBTN        = new Button("Continue");
+    Label studentOrCourseLBL  = new Label ("Select \"Courses\" or \"Students\"");
+    Label scr1InstructionsLBL = new Label ("Select an option to see information or add grades.");
 
-    // Screen 2
+    // Error screen: if nothing is selected on screen 1
+    Label errorMsgLBL = new Label(
+            "Error: No option selected.\n" +
+                "Select \"Courses\" to view information about a course or add grades for a course.\n" +
+                "Select \"Students\" to view information about a student or add grades for a student." );
+
+    // Screen 2: selecting a course to view information about it
     Label selectCourseLBL             = new Label("Select course");
     ComboBox<String> selectCourseCOMB = new ComboBox<>();
     TextArea displayCourseInfoTXT     = new TextArea();
     Button confirmCourseBTN           = new Button("Confirm");
     Button addCourseGradeBTN          = new Button("Add grades for course");
-    Label scr2InstructionsLBL         = new Label("Choose a course you would like to see information about or add grades.");
+    Label scr2InstructionsLBL         = new Label("Choose a course to view information or add grades.");
 
-
-    //return btn
-
-    // screen 3
+    // Screen 3: selecting a student to view information about them
     Label selectStudentLBL             = new Label("Select student");
     ComboBox<String> selectStudentCOMB = new ComboBox<>();
     TextArea displayStudentInfoTXT     = new TextArea();
     Button addGradeBTN                 = new Button("Add grade for student");
     Button confirmStudentBTN           = new Button("Confirm");
-    Label scr3InstructionsLBL          = new Label("Choose a student you would like to see information about or add grade.");
+    Label scr3InstructionsLBL          = new Label("Choose a student to view information or add grades.");
 
-    // screen 4
+    // Screen 4: adding grades to ungraded courses/students
     Label selectedStudentLBL              = new Label("");
     Label selectNullCourseLBL             = new Label("Select course");
     ComboBox<String> selectNullCourseCOMB = new ComboBox<>();
-    Label selectGradeLBL                  = new Label("Select a grade");
+    Label selectGradeLBL                  = new Label("Select grade");
     ComboBox<String> selectGradeCOMB      = new ComboBox<>();
     Button setGradeBTN                    = new Button("Set grade for student");
     Label confirmGradeUpdate              = new Label("");
-    Label scr4InstructionsLBL = new Label("");
+    Label scr4InstructionsLBL             = new Label("");
+
 
     public StudentsView(StudentsController control){
         this.control = control;
-        //this.Window = primaryStage;
         createAndConfigure();
     }
 
-
-
+    // Configuring the settings for everything (i.e. position, color, font size etc.)
     private void createAndConfigure(){
+        // Settings for the view
         startview = new Pane();
         startview.setMinSize(500,500);
         startview.setStyle("-fx-background-color: #d3ccff;");
+
+        // Adding all nodes to their corresponding screen
         nullscreen = new Screen(new Node[]{errorMsgLBL});
-        screen1 = new Screen(new Node[] {continueBTN, studentOrCourseLBL, selStudentOrCourseCOMB, scr1InstructionsLBL});
-        screen2 = new Screen(new Node[] {selectCourseLBL, selectCourseCOMB, displayCourseInfoTXT, confirmCourseBTN, addCourseGradeBTN, scr2InstructionsLBL});
-        screen3 = new Screen(new Node[] {selectStudentLBL, selectStudentCOMB, displayStudentInfoTXT, addGradeBTN, confirmStudentBTN, scr3InstructionsLBL});
-        screen4 = new Screen(new Node[] {selectedStudentLBL, selectNullCourseLBL, selectNullCourseCOMB, selectGradeLBL, selectGradeCOMB, setGradeBTN, confirmGradeUpdate, scr4InstructionsLBL});
+        screen1    = new Screen(new Node[]{continueBTN, studentOrCourseLBL, selStudentOrCourseCOMB, scr1InstructionsLBL});
+        screen2    = new Screen(new Node[]{selectCourseLBL, selectCourseCOMB, displayCourseInfoTXT, confirmCourseBTN, addCourseGradeBTN, scr2InstructionsLBL});
+        screen3    = new Screen(new Node[]{selectStudentLBL, selectStudentCOMB, displayStudentInfoTXT, addGradeBTN, confirmStudentBTN, scr3InstructionsLBL});
+        screen4    = new Screen(new Node[]{selectedStudentLBL, selectNullCourseLBL, selectNullCourseCOMB, selectGradeLBL, selectGradeCOMB, setGradeBTN, confirmGradeUpdate, scr4InstructionsLBL});
+
+        // Setting initial previous screen for each screen
         screen2.setPrev(screen1);
         screen3.setPrev(screen1);
         screen4.setPrev(screen3);
         nullscreen.setPrev(screen1);
 
-
-
-
         screens.put("Courses", screen2);
         screens.put("Students", screen3);
         screens.put(null, nullscreen);
 
-
+        // Adding all nodes to the view
         startview.getChildren().addAll(screen1.getNodes());
-
         startview.getChildren().addAll(screen2.getNodes());
-
         startview.getChildren().addAll(screen3.getNodes());
         startview.getChildren().addAll(screen4.getNodes());
         startview.getChildren().addAll(nullscreen.getNodes());
-
-
         startview.getChildren().add(exitBtn);
-        exitBtn.relocate(550, 20);
         startview.getChildren().add(returnBTN);
+
+        // Exit button and Return button settings
+        exitBtn.relocate(550, 20);
         returnBTN.relocate(530, 400);
+        returnBTN.setVisible(false);
 
-        // null screen
+        // Error screen settings
         errorMsgLBL.relocate(50, 100);
+        errorMsgLBL.setTextFill(Color.RED);
+        Font font = Font.font("Arial", 14); //, FontWeight.BLACK
+        errorMsgLBL.setFont(font);
 
-        // Screen 1
+        // Screen 1 settings
         continueBTN.relocate(250,350);
-        //continueBTN.setStyle("-fx-foreground-color: red;");
-
-        studentOrCourseLBL.relocate(100, 200);
+        studentOrCourseLBL.relocate(85, 200);
         selStudentOrCourseCOMB.relocate(250, 200);
         ObservableList<String> courseOrStudent = makeObsList("Students", "Courses");
         selStudentOrCourseCOMB.setItems(courseOrStudent);
         scr1InstructionsLBL.relocate(100, 25);
         scr1InstructionsLBL.setWrapText(true);
         scr1InstructionsLBL.setMaxWidth(350);
-        Font font = Font.font("Arial", 26); //, FontWeight.BLACK
         scr1InstructionsLBL.setFont(font);
 
-
-        // Screen 2
-        selectCourseLBL.relocate(100, 100);
+        // Screen 2 settings
+        selectCourseLBL.relocate(140, 100);
         selectCourseCOMB.relocate(250, 100);
         ObservableList<String> courses = control.getCourseIDs();
         selectCourseCOMB.setItems(courses);
@@ -148,12 +139,8 @@ public class StudentsView {
         scr2InstructionsLBL.setMaxWidth(400);
         scr2InstructionsLBL.setFont(new Font("Arial", 20));
 
-
-        //return btn
-
-
-        // screen 3
-        selectStudentLBL.relocate(100,100);
+        // Screen 3 settings
+        selectStudentLBL.relocate(140,100);
         selectStudentCOMB.relocate(250, 100);
         ObservableList<String> students = control.getStudentNames();
         selectStudentCOMB.setItems(students);
@@ -161,6 +148,7 @@ public class StudentsView {
         displayStudentInfoTXT.setEditable(false);
         displayStudentInfoTXT.setMaxWidth(400);
         displayStudentInfoTXT.setMaxHeight(150);
+        displayStudentInfoTXT.setStyle("-fx-text-inner-color: #ff0000;");
         addGradeBTN.relocate(40,400);
         confirmStudentBTN.relocate(250,150);
         scr3InstructionsLBL.relocate(100, 30);
@@ -168,8 +156,7 @@ public class StudentsView {
         scr3InstructionsLBL.setMaxWidth(400);
         scr3InstructionsLBL.setFont(new Font("Arial", 20));
 
-
-        // screen 4
+        // screen 4 settings
         selectedStudentLBL.setFont(new Font("Arial", 20));
         selectedStudentLBL.setTextFill(Color.color(0.9,0,1));
         selectedStudentLBL.setTextAlignment(TextAlignment.CENTER);
@@ -186,8 +173,6 @@ public class StudentsView {
         scr4InstructionsLBL.setWrapText(true);
         scr4InstructionsLBL.setMaxWidth(400);
         scr4InstructionsLBL.setFont(new Font("Arial", 20));
-
-
     }
 
     public ObservableList<String> makeObsList(String... strings){
@@ -197,32 +182,20 @@ public class StudentsView {
         return  studentNames;
     }
 
-
-
-
-
-
     public Parent asParent(){
         return startview;
     }
 }
 
+// Screen class for storing nodes and previous screen
 class Screen{
     Node[] nodes;
     Screen prev;
-    String trigger = "none";
+    //String trigger = "none";
 
     public Screen(Node[] nodes){
         this.nodes = nodes;
         this.prev = this;
-    }
-
-    public String getTrigger(){
-        return trigger;
-    }
-
-    public void setTrigger(String trigger) {
-        this.trigger = trigger;
     }
 
     public void setPrev(Screen prev){
