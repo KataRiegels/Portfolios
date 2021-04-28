@@ -83,6 +83,25 @@ public class Main extends Application
         Button detailsButton = new Button("Details");
         Button refresh = new Button("Refresh");
 
+        // ListView Listeners
+
+        showLeft.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                String current = newValue;
+                if (showStudents)
+                {
+                    showRight.getItems().clear();
+                    showRight.getItems().addAll(con.getStudent(current));
+                } 
+                else
+                {
+                    showRight.getItems().clear();
+                    showRight.getItems().addAll(con.getCourse(current));
+                }
+                }
+        });
+
         // Button Events
 
         refresh.setOnAction(e -> 
@@ -141,25 +160,6 @@ public class Main extends Application
                     showRight.getItems().addAll(con.getStudent(currentTable));
                 }
             }
-        });
-
-        // ListView Listeners
-
-        showLeft.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String current = newValue;
-                if (showStudents)
-                {
-                    showRight.getItems().clear();
-                    showRight.getItems().addAll(con.getStudent(current));
-                } 
-                else
-                {
-                    showRight.getItems().clear();
-                    showRight.getItems().addAll(con.getCourse(current));
-                }
-                }
         });
 
         // Layouts
