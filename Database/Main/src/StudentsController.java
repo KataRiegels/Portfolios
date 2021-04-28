@@ -6,9 +6,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 
 public class StudentsController {
     StudentModel model;
@@ -74,18 +74,18 @@ public class StudentsController {
 
     public void setNewGrade(String grade){
         if (view.selectNullCourseCOMB.getValue() == null || grade == null){
-            view.confirmGradeUpdate.setText("Please select both a course and grade");
+            view.confirmGradeUpdate.setText("Please select both a course and grade.");
 
         }else{
             String student, courseID;
             if (currentScreen.getPrev().equals(view.screen2)){
-                System.out.println("from screen2");
+                //System.out.println("from screen2");
                 student = view.selectNullCourseCOMB.getValue();
 
                 courseID = view.selectCourseCOMB.getValue();
-                System.out.println("Student: " + student + " course: " + courseID );
+                //System.out.println("Student: " + student + " course: " + courseID );
             } else{
-                System.out.println("else");
+                //System.out.println("else");
                 student = view.selectStudentCOMB.getValue();
                 courseID = view.selectNullCourseCOMB.getValue();
             }
@@ -98,7 +98,7 @@ public class StudentsController {
     }
 
 
-
+    // updates the text area to display course information
     public void courseInfoBox(String courseID){
         view.displayCourseInfoTXT.clear();
         if (courseID == null){
@@ -108,13 +108,14 @@ public class StudentsController {
             String teacherName = model.getTeacherName(courseID);
             String courseAvg = model.getCourseAverage(courseID);
 
-
-            view.displayCourseInfoTXT.appendText("Selected course: " + courseName.get(0) + " - " + courseName.get(1) + " - " + courseName.get(2) + "\n");
-            view.displayCourseInfoTXT.appendText("Course teacher: " + teacherName + "\n");
-            view.displayCourseInfoTXT.appendText("Course average: " + courseAvg);
+            view.displayCourseInfoTXT.appendText(
+                    "Selected course: " + courseName.get(0) + " - " + courseName.get(2) + " - " + courseName.get(1) + "\n\n" +
+                       "Teacher: " + teacherName + "\n\n" +
+                       "Average grade: " + courseAvg);
         }
     }
 
+    // updates the text area to display student information
     public void studentInfoBox(String studentName) {
         view.displayStudentInfoTXT.clear();
         if (studentName == null) view.displayStudentInfoTXT.appendText("No student selected");
@@ -123,23 +124,25 @@ public class StudentsController {
             ArrayList<String> courseName;
             String studentAvg = model.getStudentAverage(studentName);
 
-            view.displayStudentInfoTXT.appendText("Selected student: " + studentName + "\n");
+            view.displayStudentInfoTXT.appendText("Selected student: " + studentName + "\n\nCourses:\n");
             for(String[] course : courseGrade){
-                 courseName = model.getCourseName(course[0]);
-                 String course_ = "Course: " + courseName.get(0) + " - "  + courseName.get(1) + " - " + courseName.get(2);
-                view.displayStudentInfoTXT.appendText(course_ + " - Got grade: " + course[1] +  "\n");
+                courseName = model.getCourseName(course[0]);
+                view.displayStudentInfoTXT.appendText(
+                        courseName.get(0) + " - "  + courseName.get(1) + " - " + courseName.get(2) +
+                           " - Grade: " + course[1] +  "\n");
             }
-            view.displayStudentInfoTXT.appendText("Average grade: " + studentAvg);
+            view.displayStudentInfoTXT.appendText("\nAverage grade: " + studentAvg);
         }
-
     }
 
-
+    // goes to screen 4 for adding a grade for an ungraded student
     public void goToStudentGrade(Screen oldscreen, Screen newscreen, String name){
         ObservableList<String> ungradedCourses = getUngradedCourseIDs(name);
         if (ungradedCourses.isEmpty()) {
             view.displayStudentInfoTXT.clear();
-            view.displayStudentInfoTXT.appendText("Cannot add grade. Please review student selection.");
+            view.displayStudentInfoTXT.appendText(
+                    "Error: Cannot add grade.\n" +
+                       "Please review student selection.");
         }
         else {
             view.selectNullCourseCOMB.setItems(ungradedCourses);
@@ -147,19 +150,17 @@ public class StudentsController {
             view.selectedStudentLBL.setText(name);
             newscreen.setPrev(oldscreen);
             goTo(oldscreen, newscreen);
-            view.selectNullCourseLBL.setText("Select Course");
+            view.selectNullCourseLBL.setText("Select course");
         }
     }
 
-
+    // goes to screen 4 for adding a grade for an ungraded course
     public void goToCourseGrade(Screen oldscreen, Screen newscreen, String courseID){
         ObservableList<String> ungradedStudents = getUngradedStudents(courseID);
         if (ungradedStudents.isEmpty()) {
             view.displayCourseInfoTXT.clear();
             view.displayCourseInfoTXT.appendText(
-                    "Error: Cannot add grade.\n" +
-                       "All students in this course have been graded.\n" +
-                            "Please review course selection.");
+                    "Error: Cannot add grade.\nPlease review course selection.");
         }
         else{
             view.selectNullCourseCOMB.setItems(ungradedStudents);

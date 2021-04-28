@@ -28,45 +28,43 @@ public class StudentsView {
                "Select \"Students\" to view information about a student or add grades for a student." );
     //Button okBTN = new Button("Okay");
 
+    // Creating labels, buttons etc. for each screen:
 
-
-    // Screen 1
-
+    // Screen 1: for choosing to view information about either courses or students
     Button continueBTN       = new Button("Continue");
     Label studentOrCourseLBL = new Label("Select \"Courses\" or \"Students\"");
     Label scr1InstructionsLBL = new Label("Select an option to see information or add grades.");
-
     ComboBox<String> selStudentOrCourseCOMB =new ComboBox<>();
+    // return btn should not be visible
 
-    // Screen 2
+    // Screen 2: selecting a course to view information about it
     Label selectCourseLBL             = new Label("Select course");
     ComboBox<String> selectCourseCOMB = new ComboBox<>();
     TextArea displayCourseInfoTXT     = new TextArea();
-
     Button confirmCourseBTN           = new Button("Confirm");
     Button addCourseGradeBTN          = new Button("Add grades for course");
     Label scr2InstructionsLBL         = new Label("Choose a course to view information or add grades.");
+    // return btn should be visible
 
-
-    //return btn
-
-    // screen 3
+    // Screen 3: selecting a student to view information about them
     Label selectStudentLBL             = new Label("Select student");
     ComboBox<String> selectStudentCOMB = new ComboBox<>();
     TextArea displayStudentInfoTXT     = new TextArea();
     Button addGradeBTN                 = new Button("Add grade for student");
     Button confirmStudentBTN           = new Button("Confirm");
-    Label scr3InstructionsLBL          = new Label("Choose a student you would like to see information about or add grade.");
+    Label scr3InstructionsLBL          = new Label("Choose a student to view information or add grades.");
+    // return btn should be visible
 
-    // screen 4
+    // Screen 4: adding grades to ungraded courses/students
     Label selectedStudentLBL              = new Label("");
     Label selectNullCourseLBL             = new Label("Select course");
     ComboBox<String> selectNullCourseCOMB = new ComboBox<>();
-    Label selectGradeLBL                  = new Label("Select a grade");
+    Label selectGradeLBL                  = new Label("Select grade");
     ComboBox<String> selectGradeCOMB      = new ComboBox<>();
     Button setGradeBTN                    = new Button("Set grade for student");
     Label confirmGradeUpdate              = new Label("");
-    Label scr4InstructionsLBL = new Label("");
+    Label scr4InstructionsLBL             = new Label("");
+    // return btn should be visible
 
     public StudentsView(StudentsController control){
         this.control = control;
@@ -155,7 +153,7 @@ public class StudentsView {
 
 
         // screen 3
-        selectStudentLBL.relocate(100,100);
+        selectStudentLBL.relocate(140,100);
         selectStudentCOMB.relocate(250, 100);
         ObservableList<String> students = control.getStudentNames();
         selectStudentCOMB.setItems(students);
