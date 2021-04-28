@@ -1,22 +1,15 @@
 
-
+// importing required classes / packages
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
-
-import javafx.scene.*;
-
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import javafx.scene.paint.Color;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.*;
-//import javafx.scene.text.*;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import javafx.scene.paint.Color;
+import java.util.*;
 
 
 public class StudentsView {
@@ -29,14 +22,18 @@ public class StudentsView {
     Button returnBTN = new Button("Return");
 
     // null screen
-    Label errorMsgLBL = new Label("error: ");
-    Button okBTN       = new Button("Okay");
+    Label errorMsgLBL = new Label(
+            "Error: No option selected.\n" +
+               "Select \"Courses\" to view information about a course or add grades for a course.\n" +
+               "Select \"Students\" to view information about a student or add grades for a student." );
+    //Button okBTN = new Button("Okay");
+
 
 
     // Screen 1
 
     Button continueBTN       = new Button("Continue");
-    Label studentOrCourseLBL = new Label("Select course or student:");
+    Label studentOrCourseLBL = new Label("Select \"Courses\" or \"Students\"");
     Label scr1InstructionsLBL = new Label("Select an option to see information or add grades.");
 
     ComboBox<String> selStudentOrCourseCOMB =new ComboBox<>();
@@ -45,9 +42,10 @@ public class StudentsView {
     Label selectCourseLBL             = new Label("Select course");
     ComboBox<String> selectCourseCOMB = new ComboBox<>();
     TextArea displayCourseInfoTXT     = new TextArea();
+
     Button confirmCourseBTN           = new Button("Confirm");
     Button addCourseGradeBTN          = new Button("Add grades for course");
-    Label scr2InstructionsLBL         = new Label("Choose a course you would like to see information about or add grades.");
+    Label scr2InstructionsLBL         = new Label("Choose a course to view information or add grades.");
 
 
     //return btn
@@ -113,15 +111,19 @@ public class StudentsView {
         exitBtn.relocate(550, 20);
         startview.getChildren().add(returnBTN);
         returnBTN.relocate(530, 400);
+        returnBTN.setVisible(false);
 
         // null screen
         errorMsgLBL.relocate(50, 100);
+        errorMsgLBL.setTextFill(Color.RED);
+        //errorMsgLBL.setStyle("-fx-background-color: #FF0000FF;");
+
 
         // Screen 1
         continueBTN.relocate(250,350);
         //continueBTN.setStyle("-fx-foreground-color: red;");
 
-        studentOrCourseLBL.relocate(100, 200);
+        studentOrCourseLBL.relocate(85, 200);
         selStudentOrCourseCOMB.relocate(250, 200);
         ObservableList<String> courseOrStudent = makeObsList("Students", "Courses");
         selStudentOrCourseCOMB.setItems(courseOrStudent);
@@ -133,7 +135,7 @@ public class StudentsView {
 
 
         // Screen 2
-        selectCourseLBL.relocate(100, 100);
+        selectCourseLBL.relocate(140, 100);
         selectCourseCOMB.relocate(250, 100);
         ObservableList<String> courses = control.getCourseIDs();
         selectCourseCOMB.setItems(courses);
@@ -210,13 +212,13 @@ public class StudentsView {
 class Screen{
     Node[] nodes;
     Screen prev;
-    String trigger = "none";
+    //String trigger = "none";
 
     public Screen(Node[] nodes){
         this.nodes = nodes;
         this.prev = this;
     }
-
+    /*
     public String getTrigger(){
         return trigger;
     }
@@ -224,7 +226,7 @@ class Screen{
     public void setTrigger(String trigger) {
         this.trigger = trigger;
     }
-
+    */
     public void setPrev(Screen prev){
         this.prev = prev;
     }

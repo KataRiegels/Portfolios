@@ -1,4 +1,5 @@
 
+// importing required classes / packages
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -155,7 +156,10 @@ public class StudentsController {
         ObservableList<String> ungradedStudents = getUngradedStudents(courseID);
         if (ungradedStudents.isEmpty()) {
             view.displayCourseInfoTXT.clear();
-            view.displayCourseInfoTXT.appendText("Cannot add grade. Please review course selection.");
+            view.displayCourseInfoTXT.appendText(
+                    "Error: Cannot add grade.\n" +
+                       "All students in this course have been graded.\n" +
+                            "Please review course selection.");
         }
         else{
             view.selectNullCourseCOMB.setItems(ungradedStudents);
@@ -172,6 +176,11 @@ public class StudentsController {
 
 
     public void goTo(Screen oldscreen, Screen newscreen){
+        if (oldscreen == view.screen1){
+            view.returnBTN.setVisible(true);
+        } else if (newscreen == view.screen1) {
+            view.returnBTN.setVisible(false);
+        }
         oldscreen.hide();
         newscreen.show();
         currentScreen = newscreen;

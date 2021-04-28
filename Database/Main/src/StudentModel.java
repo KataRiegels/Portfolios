@@ -1,6 +1,7 @@
+
+// importing required classes / packages
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import static java.sql.DriverManager.getConnection;
 
