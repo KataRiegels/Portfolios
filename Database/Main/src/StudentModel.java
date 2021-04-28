@@ -9,7 +9,6 @@ public class StudentModel {
     Connection conn = null;
     String url;
     Statement stmt = null;
-    PreparedStatement pstmt = null;
     ResultSet rs = null;
     StudentModel(String url) {
         this.url = url;

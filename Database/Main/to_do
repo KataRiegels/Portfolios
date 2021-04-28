@@ -5,15 +5,15 @@
 - DONE "cannot set grade for this ...."
 - DONE ("set grades" for courses)
 
-- comments
+- DONE comments
 - fix naming of variables/functions in code
 - DONE look at imports
 - DONE revise text on labels etc
 - DONE nullscreen error message!
-- report
+- DONE report
 - DONE(diagram update)
 - clean repository
-- remove trigger in Screen class?
+- DONE remove trigger in Screen class?
 
 - make pretty colors :)
 

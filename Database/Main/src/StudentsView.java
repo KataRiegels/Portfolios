@@ -196,15 +196,7 @@ class Screen{
         this.nodes = nodes;
         this.prev = this;
     }
-    /*
-    public String getTrigger(){
-        return trigger;
-    }
 
-    public void setTrigger(String trigger) {
-        this.trigger = trigger;
-    }
-    */
     public void setPrev(Screen prev){
         this.prev = prev;
     }

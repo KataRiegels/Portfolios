@@ -6,6 +6,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -64,6 +66,7 @@ public class StudentsController {
         // first checks if a course/student and a grade where selected
         if (view.selectNullCourseCOMB.getValue() == null || grade == null){
             // error message if course/student and/or grade were not selected
+            view.confirmGradeUpdate.setTextFill(Color.RED);
             view.confirmGradeUpdate.setText("Please select both a course and grade.");
         } else {
             String student, courseID;
@@ -77,6 +80,7 @@ public class StudentsController {
             }
             // updating the grade in the database
             model.updateGrade(student, courseID, Integer.parseInt(grade));
+            view.confirmGradeUpdate.setTextFill(Color.BLACK);
             view.confirmGradeUpdate.setText("Grade has been updated");
         }
         // clearing the selection from combo boxes
@@ -90,6 +94,7 @@ public class StudentsController {
         // first checks if a course was selected
         if (courseID == null){
             // error message if no course was selected
+            view.displayCourseInfoTXT.setStyle("-fx-text-inner-color: #ff0000;");
             view.displayCourseInfoTXT.appendText("No course selected");
         } else {
             // get course name, teacher and course average from database
@@ -97,6 +102,7 @@ public class StudentsController {
             String teacherName           = model.getTeacherName  (courseID);
             String courseAvg             = model.getCourseAverage(courseID);
             // update text area
+            view.displayCourseInfoTXT.setStyle("-fx-text-inner-color: #000000;");
             view.displayCourseInfoTXT.appendText(
                     "Selected course: " + courseName.get(0) + " - " + courseName.get(2) + " - " + courseName.get(1) + "\n\n" +
                        "Teacher: " + teacherName + "\n\n" +
@@ -110,6 +116,7 @@ public class StudentsController {
         // first checks if a student was selected
         if (studentName == null) {
             // error message if no student was selected
+            view.displayStudentInfoTXT.setStyle("-fx-text-inner-color: #ff0000;");
             view.displayStudentInfoTXT.appendText("No student selected");
         } else{
             // get grade for each course and student average from database
@@ -117,6 +124,7 @@ public class StudentsController {
             String studentAvg               = model.getStudentAverage(studentName);
 
             ArrayList<String> courseName;
+            view.displayStudentInfoTXT.setStyle("-fx-text-inner-color: #000000;");
             view.displayStudentInfoTXT.appendText("Selected student: " + studentName + "\n\nCourses:\n");
             // display taken courses and grade for each
             for(String[] course : courseGrade){
@@ -136,6 +144,7 @@ public class StudentsController {
         ObservableList<String> ungradedCourses = getUngradedCourseIDs(name);
         if (ungradedCourses.isEmpty()) {
             // error message if all courses are graded or no student was selected
+            view.displayStudentInfoTXT.setStyle("-fx-text-inner-color: #ff0000;");
             view.displayStudentInfoTXT.clear();
             view.displayStudentInfoTXT.appendText(
                     "Error: Cannot add grade.\n" +
@@ -160,6 +169,7 @@ public class StudentsController {
         if (ungradedStudents.isEmpty()) {
             // error message if all students are graded or no course was selected
             view.displayCourseInfoTXT.clear();
+            view.displayCourseInfoTXT.setStyle("-fx-text-inner-color: #ff0000;");
             view.displayCourseInfoTXT.appendText(
                     "Error: Cannot add grade.\n" +
                        "Please review course selection.");
@@ -191,12 +201,13 @@ public class StudentsController {
         oldscreen.hide();
         newscreen.show();
         currentScreen = newscreen;
-        // clear text areas and selections from combo boxes
+        // clear text areas, labels and selections from combo boxes
         view.displayCourseInfoTXT  .clear();
         view.displayStudentInfoTXT .clear();
         view.selStudentOrCourseCOMB.getSelectionModel().clearSelection();
         view.selectNullCourseCOMB  .getSelectionModel().clearSelection();
         view.selectGradeCOMB       .getSelectionModel().clearSelection();
+        view.confirmGradeUpdate    .setText("");
     }
 
     // queries student names for combo box
