@@ -148,6 +148,7 @@ public class StudentsView {
         displayStudentInfoTXT.setEditable(false);
         displayStudentInfoTXT.setMaxWidth(400);
         displayStudentInfoTXT.setMaxHeight(150);
+        displayStudentInfoTXT.setStyle("-fx-text-inner-color: #ff0000;");
         addGradeBTN.relocate(40,400);
         confirmStudentBTN.relocate(250,150);
         scr3InstructionsLBL.relocate(100, 30);
