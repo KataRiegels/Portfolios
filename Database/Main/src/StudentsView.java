@@ -27,14 +27,14 @@ public class StudentsView {
     // Screen 1: for choosing to view information about either courses or students
     ComboBox<String> selStudentOrCourseCOMB =new ComboBox<>();
     Button continueBTN        = new Button("Continue");
-    Label studentOrCourseLBL  = new Label("Select \"Courses\" or \"Students\"");
-    Label scr1InstructionsLBL = new Label("Select an option to see information or add grades.");
+    Label studentOrCourseLBL  = new Label ("Select \"Courses\" or \"Students\"");
+    Label scr1InstructionsLBL = new Label ("Select an option to see information or add grades.");
 
     // Error screen: if nothing is selected on screen 1
     Label errorMsgLBL = new Label(
             "Error: No option selected.\n" +
-                    "Select \"Courses\" to view information about a course or add grades for a course.\n" +
-                    "Select \"Students\" to view information about a student or add grades for a student." );
+                "Select \"Courses\" to view information about a course or add grades for a course.\n" +
+                "Select \"Students\" to view information about a student or add grades for a student." );
 
     // Screen 2: selecting a course to view information about it
     Label selectCourseLBL             = new Label("Select course");
