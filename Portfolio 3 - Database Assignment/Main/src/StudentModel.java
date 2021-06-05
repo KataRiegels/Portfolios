@@ -10,6 +10,8 @@ public class StudentModel {
     Connection conn = null;
     String url;
     Statement stmt = null;
+    PreparedStatement pstmt = null;
+    String psql = "Select courseName,courseYear,courseSemester  From Courses where courseID= ?;";
     ResultSet rs = null;
     StudentModel(String url) {
         this.url = url;
@@ -27,11 +29,13 @@ public class StudentModel {
     //used to create a statement to execute SQL queries
     public void createStatement() throws SQLException {
         this.stmt = conn.createStatement();
+        this.pstmt = conn.prepareStatement(psql);
     }
     //Method used to return an array of all courseIDs
     public ArrayList<String> SQLQueryCourseIDs() {
         ArrayList<String> Names = new ArrayList<>();
         String sql = "Select courseID From Courses;";
+
         try {
             rs = stmt.executeQuery(sql);
             while (rs != null && rs.next()) {
@@ -60,13 +64,14 @@ public class StudentModel {
         rs = null;
         return Names;
     }
-    //Method used to return an array of all course names
+    /* Method used to return an array of all course names (using PreparedStatement!)*/
     public ArrayList<String> getCourseName(String ID) {
         ArrayList<String> courseNames = new ArrayList<>();
-        String sql = "Select courseName,courseYear,courseSemester  From Courses where courseID='" + ID + "';";
+        //String sql = "Select courseName,courseYear,courseSemester  From Courses where courseID='" + ID + "';";
 
         try {
-            rs = stmt.executeQuery(sql);
+            pstmt.setString(1, ID);
+            rs = pstmt.executeQuery();
             courseNames.add(rs.getString(1));
             courseNames.add(Integer.toString(rs.getInt(2)));
             courseNames.add(rs.getString(3));
