@@ -12,17 +12,19 @@ import javafx.scene.paint.Color;
 import java.util.*;
 
 
-public class StudentsView {
+// StudentsView class for keeping the different screen elements
+public class StudentsView 
+{
+    // Variables
     private StudentsController control;
     private Pane startview;
     public Screen nullscreen, screen1, screen2, screen3, screen4;
     HashMap<String, Screen> screens = new HashMap<>();
 
+    // JavaFX Objects
     // Creating buttons present on each screen
     Button exitBtn   = new Button("Exit");
     Button returnBTN = new Button("Return");
-
-    // Creating labels, buttons etc. for each individual screen:
 
     // Screen 1: for choosing to view information about either courses or students
     ComboBox<String> selStudentOrCourseCOMB =new ComboBox<>();
@@ -62,7 +64,7 @@ public class StudentsView {
     Label confirmGradeUpdate              = new Label("");
     Label scr4InstructionsLBL             = new Label("");
 
-
+    // Init
     public StudentsView(StudentsController control){
         this.control = control;
         createAndConfigure();
@@ -175,6 +177,7 @@ public class StudentsView {
         scr4InstructionsLBL.setFont(new Font("Arial", 20));
     }
 
+    // Method for quickly making an observable list
     public ObservableList<String> makeObsList(String... strings){
         ArrayList<String> names= new ArrayList<>();
         for (String str: strings) names.add(str);
@@ -188,52 +191,57 @@ public class StudentsView {
 }
 
 // Screen class for storing nodes and previous screen
-class Screen{
+class Screen
+{
+    // Variables
     Node[] nodes;
     Screen prev;
-    //String trigger = "none";
 
-    public Screen(Node[] nodes){
+    public Screen(Node[] nodes)
+    {
         this.nodes = nodes;
         this.prev = this;
     }
 
-    public void setPrev(Screen prev){
+    public void setPrev(Screen prev)
+    {
         this.prev = prev;
     }
 
-    public void setNodes(Node[] nodes){
+    public void setNodes(Node[] nodes)
+    {
         this.nodes = nodes;
     }
 
-    public Node[] getNodes() {
+    public Node[] getNodes() 
+    {
         return nodes;
     }
 
-    public Screen getPrev() {
+    public Screen getPrev() 
+    {
         return prev;
     }
 
-    public void hide(){
-        for(Node node : nodes ){
+    public void hide()
+    {
+        for(Node node : nodes)
+        {
             node.setVisible(false);
         }
     }
 
-    public void show(){
-        for(Node node : nodes ){
+    public void show()
+    {
+        for(Node node : nodes)
+        {
             node.setVisible(true);
         }
     }
 
-
-
-
-
-    public void addNode(Node node){
+    public void addNode(Node node)
+    {
         nodes = Arrays.copyOf(nodes, nodes.length+1);
         nodes[nodes.length-1] = node;
-
     }
-
 }
